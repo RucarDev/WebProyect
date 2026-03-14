@@ -10,7 +10,7 @@ function About() {
         <div>
           <img
             src={heroImage}
-            alt="Sobre SHCAKES"
+            alt="Sobre Mi"
             className="w-full h-80 md:h-[500px] object-cover rounded-xl"
           />
         </div>
@@ -23,9 +23,7 @@ function About() {
           </h2>
 
           <p className="text-gray-600 leading-relaxed">
-            SHCAKES nace con la idea de reinventar la clásica cheese cake.
-            Cada tarta es elaborada de forma casera, con ingredientes
-            seleccionados y cuidando cada detalle.
+           Ruben es...
           </p>
 
           <p className="text-gray-600 leading-relaxed">
