@@ -21,12 +21,14 @@ const ThreeDViewer = () => {
     directionalLight.position.set(5, 5, 5);  // Posición de la luz
     scene.add(directionalLight);
 
-    // Cargar el modelo 3D
+    // Cargar el modelo 3D usando GLTFLoader
     const loader = new GLTFLoader();
     loader.load(
-      '/models/grass_medium_01_1k.gltf',  
+      '/models/lion_head_1k.gltf',  // Cambia la ruta al archivo de tu modelo GLTF
       (gltf) => {
+        // Asegúrate de que el modelo se haya cargado
         scene.add(gltf.scene);  // Añadir el modelo a la escena
+        console.log('Modelo 3D cargado exitosamente:', gltf);
       },
       (xhr) => {
         console.log((xhr.loaded / xhr.total) * 100 + '% cargado');
@@ -36,7 +38,8 @@ const ThreeDViewer = () => {
       }
     );
 
-    camera.position.z = 5;
+    // Ajustar la cámara para que el modelo sea visible
+    camera.position.z = 3;
 
     // Animación para que el modelo gire
     const animate = function () {
