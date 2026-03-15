@@ -1,5 +1,5 @@
-// src/components/Portfolio.jsx
 import React from 'react';
+import ThreeDViewer from './ThreeDViewer'; // Importa correctamente ThreeDViewer
 
 const Portfolio = () => {
   return (
@@ -8,7 +8,7 @@ const Portfolio = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Proyecto de Diseño Gráfico */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="ruta/a/tu/imagen1.jpg" alt="Proyecto 1" className="w-full h-64 object-cover" />
+          <img src="ruta/a/tu/imagen1.jpg" alt="Proyecto Gráfico 1" className="w-full h-64 object-cover" />
           <div className="p-4">
             <h3 className="text-xl font-semibold">Diseño Gráfico 1</h3>
             <p className="text-gray-700">Descripción breve del proyecto de diseño gráfico.</p>
@@ -17,11 +17,9 @@ const Portfolio = () => {
 
         {/* Proyecto 3D */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="ruta/a/tu/imagen2.jpg" alt="Proyecto 3D 1" className="w-full h-64 object-cover" />
-          <div className="p-4">
-            <h3 className="text-xl font-semibold">Proyecto 3D 1</h3>
-            <p className="text-gray-700">Descripción breve del proyecto 3D.</p>
-          </div>
+          <h3 className="text-xl font-semibold">Proyecto 3D</h3>
+          {/* Aquí insertamos el ThreeDViewer */}
+          <ThreeDViewer />
         </div>
       </div>
     </section>

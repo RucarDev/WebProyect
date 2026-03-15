@@ -1,7 +1,7 @@
 // src/components/ThreeDViewer.jsx
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'; // Importación correcta del cargador
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const ThreeDViewer = () => {
   useEffect(() => {
@@ -11,11 +11,12 @@ const ThreeDViewer = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('threeDContainer').appendChild(renderer.domElement);
 
+    // Cargar el modelo GLTF
     const loader = new GLTFLoader();
     loader.load(
-      'C:\Users\Usuario\Desktop\WEB\WebProyect\src\assets\grass_medium_01_1k',  // Ruta a tu archivo GLTF
+      '/models/grass_medium_01_1k.gltf',  // Cambia la ruta al archivo de tu modelo 3D
       (gltf) => {
-        scene.add(gltf.scene);
+        scene.add(gltf.scene);  // Añadir el modelo a la escena
       },
       (xhr) => {
         console.log((xhr.loaded / xhr.total) * 100 + '% cargado');
@@ -27,6 +28,7 @@ const ThreeDViewer = () => {
 
     camera.position.z = 5;
 
+    // Animación para que el modelo gire
     const animate = function () {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
