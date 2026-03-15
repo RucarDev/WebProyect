@@ -24,7 +24,7 @@ const ThreeDViewer = () => {
     // Cargar el modelo 3D
     const loader = new GLTFLoader();
     loader.load(
-      '/models/grass_medium_01_1k.gltf',  // Cambia la ruta al archivo de tu modelo GLTF
+      '/models/grass_medium_01_1k.gltf',  
       (gltf) => {
         scene.add(gltf.scene);  // Añadir el modelo a la escena
       },
