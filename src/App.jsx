@@ -6,7 +6,7 @@ import Products from "./components/Products"
 import About from "./components/About"
 import Footer from "./components/Footer"
 import ScrollToTop from "./components/ScrollToTop"
-
+import Portfolio from './components/Portfolio'; 
 
 import ProductDetail from "./pages/ProductDetail"
 import Tienda from "./pages/Tienda"
@@ -19,6 +19,7 @@ function Home() {
       <Hero />
       <Products />
       <About />
+      <Portfolio /> 
     </>
   )
 }
