@@ -1,6 +1,7 @@
-
+// src/components/ThreeDViewer.jsx
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'; // Importación correcta del cargador
 
 const ThreeDViewer = () => {
   useEffect(() => {
@@ -10,17 +11,24 @@ const ThreeDViewer = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('threeDContainer').appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    const loader = new GLTFLoader();
+    loader.load(
+      'C:\Users\Usuario\Desktop\WEB\WebProyect\src\assets\grass_medium_01_1k',  // Ruta a tu archivo GLTF
+      (gltf) => {
+        scene.add(gltf.scene);
+      },
+      (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + '% cargado');
+      },
+      (error) => {
+        console.error('Error al cargar el modelo 3D:', error);
+      }
+    );
 
     camera.position.z = 5;
 
     const animate = function () {
       requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
       renderer.render(scene, camera);
     };
 
