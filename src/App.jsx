@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import PortfolioPage from "./pages/PortfolioPage";
@@ -23,6 +24,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
+
+      <Footer />
     </div>
   );
 }

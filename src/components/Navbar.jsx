@@ -1,27 +1,42 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import logo from "../images/logo.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navLinkClass = ({ isActive }) =>
     `transition ${
       isActive
         ? "text-white"
-        : "text-white/70 hover:text-white"
+        : "text-white/80 hover:text-white"
     }`;
 
+  const handleLogoClick = () => {
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-black/70 backdrop-blur border-b border-white/10">
+    <header className="sticky top-0 z-50 bg-transparent">
       <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* LOGO */}
-        <Link to="/" className="text-xl font-bold tracking-wide">
-          Ruben
-        </Link>
+        <button
+          type="button"
+          onClick={handleLogoClick}
+          className="flex items-center gap-3"
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            className="h-9 w-auto object-contain"
+          />
+        </button>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8 text-sm">
           <NavLink to="/" className={navLinkClass}>
             Home
           </NavLink>
@@ -39,16 +54,6 @@ export default function Navbar() {
           </NavLink>
         </div>
 
-        {/* CTA BUTTON */}
-        <div className="hidden md:block">
-          <Link
-            to="/contact"
-            className="px-5 py-2 rounded-full bg-white text-black font-semibold hover:opacity-90 transition"
-          >
-            Hire Me
-          </Link>
-        </div>
-
         {/* MOBILE BUTTON */}
         <button
           className="md:hidden text-white"
@@ -60,7 +65,7 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {isOpen && (
-        <div className="md:hidden px-6 pb-6 flex flex-col gap-4 bg-black border-t border-white/10">
+        <div className="md:hidden px-6 pb-6 flex flex-col gap-4 bg-black/80 border-t border-white/10">
           <NavLink
             to="/"
             className={navLinkClass}
@@ -92,14 +97,6 @@ export default function Navbar() {
           >
             Contact
           </NavLink>
-
-          <Link
-            to="/contact"
-            className="mt-2 px-5 py-2 rounded-full bg-white text-black font-semibold text-center"
-            onClick={() => setIsOpen(false)}
-          >
-            Hire Me
-          </Link>
         </div>
       )}
     </header>
