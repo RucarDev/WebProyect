@@ -1,81 +1,107 @@
-import { useState, useEffect } from "react"
-import logo from "../assets/logo.png"
+import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
 
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const handleLogoClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
-  const scrollToSection = (id) => {
-    document
-      .getElementById(id)
-      ?.scrollIntoView({ behavior: "smooth" })
-  }
+  const navLinkClass = ({ isActive }) =>
+    `transition ${
+      isActive
+        ? "text-white"
+        : "text-white/70 hover:text-white"
+    }`;
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 flex justify-between items-center px-6 md:px-10 ${
-        scrolled
-          ? "bg-transparent py-4"
-          : "bg-background shadow-sm py-6"
-      }`}
-    >
+    <header className="sticky top-0 z-50 bg-black/70 backdrop-blur border-b border-white/10">
+      <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      {/* Logo */}
-      <img
-        src={logo}
-        alt="SHCAKES Logo"
-        onClick={handleLogoClick}
-        className={`cursor-pointer transition-all duration-300 ${
-          scrolled ? "h-7" : "h-10"
-        } hover:scale-105`}
-        translate="no"
-      />
+        {/* LOGO */}
+        <Link to="/" className="text-xl font-bold tracking-wide">
+          Ruben
+        </Link>
 
-      {/* Menú */}
-      <div
-        className={`hidden md:flex space-x-8 text-sm tracking-wide transition-colors duration-300 ${
-          scrolled ? "text-white" : "text-primary"
-        }`}
-      >
+        {/* DESKTOP MENU */}
+        <div className="hidden md:flex items-center gap-8">
+          <NavLink to="/" className={navLinkClass}>
+            Home
+          </NavLink>
 
+          <NavLink to="/portfolio" className={navLinkClass}>
+            Portfolio
+          </NavLink>
+
+          <NavLink to="/about" className={navLinkClass}>
+            About
+          </NavLink>
+
+          <NavLink to="/contact" className={navLinkClass}>
+            Contact
+          </NavLink>
+        </div>
+
+        {/* CTA BUTTON */}
+        <div className="hidden md:block">
+          <Link
+            to="/contact"
+            className="px-5 py-2 rounded-full bg-white text-black font-semibold hover:opacity-90 transition"
+          >
+            Hire Me
+          </Link>
+        </div>
+
+        {/* MOBILE BUTTON */}
         <button
-          onClick={() => scrollToSection("about")}
-          className="hover:opacity-70 transition"
+          className="md:hidden text-white"
+          onClick={() => setIsOpen(!isOpen)}
         >
-          Sobre mí
+          ☰
         </button>
+      </nav>
 
-        <button
-          onClick={() => scrollToSection("portfolio")}
-          className="hover:opacity-70 transition"
-        >
-          Proyectos
-        </button>
+      {/* MOBILE MENU */}
+      {isOpen && (
+        <div className="md:hidden px-6 pb-6 flex flex-col gap-4 bg-black border-t border-white/10">
+          <NavLink
+            to="/"
+            className={navLinkClass}
+            onClick={() => setIsOpen(false)}
+          >
+            Home
+          </NavLink>
 
-        <button
-          onClick={() => scrollToSection("contacto")}
-          className="hover:opacity-70 transition"
-        >
-          Contacto
-        </button>
+          <NavLink
+            to="/portfolio"
+            className={navLinkClass}
+            onClick={() => setIsOpen(false)}
+          >
+            Portfolio
+          </NavLink>
 
-      </div>
+          <NavLink
+            to="/about"
+            className={navLinkClass}
+            onClick={() => setIsOpen(false)}
+          >
+            About
+          </NavLink>
 
-    </nav>
-  )
+          <NavLink
+            to="/contact"
+            className={navLinkClass}
+            onClick={() => setIsOpen(false)}
+          >
+            Contact
+          </NavLink>
+
+          <Link
+            to="/contact"
+            className="mt-2 px-5 py-2 rounded-full bg-white text-black font-semibold text-center"
+            onClick={() => setIsOpen(false)}
+          >
+            Hire Me
+          </Link>
+        </div>
+      )}
+    </header>
+  );
 }
-
-export default Navbar
