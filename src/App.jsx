@@ -1,50 +1,33 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
-import Navbar from "./components/Navbar"
-import Hero from "./components/Hero"
-import Products from "./components/Products"
-import About from "./components/About"
-import Footer from "./components/Footer"
-import ScrollToTop from "./components/ScrollToTop"
-
-
-import ProductDetail from "./pages/ProductDetail"
-import Tienda from "./pages/Tienda"
-import Sobre from "./pages/Sobre"
-import Faq from "./pages/Faq"
-
-function Home() {
-  return (
-    <>
-      <Hero />
-      <Products />
-      <About />
-    </>
-  )
-}
+import Home from "./pages/Home";
+import PortfolioPage from "./pages/PortfolioPage";
+import ProjectPage from "./pages/ProjectPage";
+import SobrePage from "./pages/AboutPage";
+import ContactoPage from "./pages/ContactoPage";
 
 function App() {
   return (
     <div className="bg-background text-primary min-h-screen flex flex-col">
-
       <Navbar />
-     <ScrollToTop />
+      <ScrollToTop />
 
-
-      <div className="flex-grow">
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/tienda" element={<Tienda />} />
-          <Route path="/sobre" element={<Sobre />} />
-          <Route path="/faq" element={<Faq />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/portfolio/:slug" element={<ProjectPage />} />
+          <Route path="/sobre" element={<SobrePage />} />
+          <Route path="/contacto" element={<ContactoPage />} />
         </Routes>
-      </div>
+      </main>
 
       <Footer />
-
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

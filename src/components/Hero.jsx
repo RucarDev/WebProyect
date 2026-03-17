@@ -1,44 +1,49 @@
-import heroImage from "../assets/hero.jpg"
+import { Link } from "react-router-dom";
 
-function Hero() {
+export default function Hero() {
   return (
-    <section className="relative h-screen flex items-center justify-center">
+    <section className="min-h-[80vh] flex items-center">
+      <div className="max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
 
-      {/* Imagen */}
-      <img
-        src={heroImage}
-        alt="Cheesecake SHCAKES"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+        <div>
+          <p className="uppercase tracking-[0.3em] text-sm opacity-60 mb-4">
+            Graphic Designer & 3D Artist
+          </p>
 
-      {/* Overlay oscuro */}
-      <div className="absolute inset-0 bg-black/30"></div>
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            Visual portfolio focused on design and 3D.
+          </h1>
 
-      {/* Contenido */}
-      <div className="relative text-center text-white px-6">
-        <h2 className="text-3xl sm:text-4xl md:text-6xl font-light mb-6">
-          Cheese Cakes caseras
-        </h2>
+          <p className="text-lg opacity-80 max-w-xl mb-8">
+            Hard surface, environments, animation and tracking projects with a professional presentation approach.
+          </p>
 
-        <p className="text-sm sm:text-base md:text-lg max-w-md md:max-w-xl mx-auto mb-8">
-          Hechas a mano. Ingredientes seleccionados.
-          El sabor que se queda.
-        </p>
+          <div className="flex gap-4">
+            <Link
+              to="/portfolio"
+              className="px-6 py-3 rounded-full bg-white text-black font-semibold"
+            >
+              View Portfolio
+            </Link>
 
-        <button
-          onClick={() => {
-            document
-              .getElementById("products")
-              ?.scrollIntoView({ behavior: "smooth" })
-          }}
-          className="bg-white text-black px-8 py-3 text-sm tracking-wide hover:opacity-80 transition"
-        >
-          Ver sabores
-        </button>
+            <Link
+              to="/contacto"
+              className="px-6 py-3 rounded-full border border-white/20"
+            >
+              Contact
+            </Link>
+          </div>
+        </div>
+
+        <div>
+          <img
+            src="/profile/avatar.jpg"
+            alt="Portfolio preview"
+            className="w-full rounded-3xl object-cover"
+          />
+        </div>
+
       </div>
-
     </section>
-  )
+  );
 }
-
-export default Hero
