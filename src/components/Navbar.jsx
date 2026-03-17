@@ -1,8 +1,9 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
   const navLinkClass = ({ isActive }) =>
@@ -17,9 +18,28 @@ export default function Navbar() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 bg-transparent">
-      <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header
+      className={[
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+        "bg-transparent",
+      ].join(" ")}
+    >
+      <nav
+        className={[
+          "max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300",
+          scrolled ? "py-2" : "py-4",
+        ].join(" ")}
+      >
 
         {/* LOGO */}
         <button
@@ -27,11 +47,14 @@ export default function Navbar() {
           onClick={handleLogoClick}
           className="flex items-center gap-3"
         >
-          <img
-            src="/images/logo.jpeg"
-            alt="Logo"
-            className="h-9 w-auto object-contain"
-          />
+          <span
+            className={[
+              "text-white tracking-[0.25em] font-semibold transition-all duration-300",
+              scrolled ? "text-sm" : "text-base",
+            ].join(" ")}
+          >
+            RUBEN PADILLA
+          </span>
         </button>
 
         {/* DESKTOP MENU */}

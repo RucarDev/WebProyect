@@ -17,23 +17,31 @@ export default function Hero() {
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* Centered content */}
-      <div className="relative text-center text-white px-6">
-        <h1 className="text-4xl md:text-6xl font-light tracking-wide mb-6">
-          Visual Portfolio
-        </h1>
-        <p className="max-w-xl mx-auto mb-10 text-sm md:text-base opacity-80">
-          Graphic design & 3D projects with a focus on strong composition,
-          lighting and presentation.
-        </p>
+      {/* Content */}
+      <div className="relative w-full max-w-7xl mx-auto px-6 text-white">
+        <div className="max-w-xl mx-auto text-left pl-6 md:pl-10">
+          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight leading-[0.9] ml-1 md:ml-2">
+            <span className="block">RUBEN</span>
+            <span className="block">PADILLA</span>
+          </h1>
+          <p className="mt-6 text-[11px] md:text-xs text-center text-white/80 uppercase tracking-[0.25em]">
+            Visuals:{" "}
+            <span className="font-semibold text-white">Ruben Padilla</span>, Dev:{" "}
+            <span className="font-semibold text-white">Carlos Padilla</span>, Location:{" "}
+            <span className="font-semibold text-white">Jaén</span>, Typology:{" "}
+            <span className="font-semibold text-white">Graphic Design &amp; 3D</span>
+          </p>
+        </div>
 
-        <button
-          type="button"
-          onClick={scrollToPreview}
-          className="px-10 py-3 border border-white/60 rounded-full text-sm tracking-wide bg-white/5 hover:bg-white/15 transition"
-        >
-          VIEW PORTFOLIO
-        </button>
+        <div className="mt-10 flex justify-center">
+          <button
+            type="button"
+            onClick={scrollToPreview}
+            className="px-10 py-3 border border-white/60 rounded-full text-sm tracking-wide bg-white/5 hover:bg-white/15 transition"
+          >
+            VIEW PORTFOLIO
+          </button>
+        </div>
       </div>
     </section>
   );

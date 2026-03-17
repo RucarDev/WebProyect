@@ -4,7 +4,8 @@
 
 body {
   background-color: #f8f6f3;
-  font-family: 'Inter', sans-serif;
+  font-family: "Helvetica Now Display", "Helvetica Now Text", "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
 }
 html, body {
   overflow-x: hidden;
