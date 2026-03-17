@@ -1,6 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import logo from "../images/logo.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +28,7 @@ export default function Navbar() {
           className="flex items-center gap-3"
         >
           <img
-            src={logo}
+            src="/images/logo.jpeg"
             alt="Logo"
             className="h-9 w-auto object-contain"
           />

@@ -1,5 +1,3 @@
-import backImage from "../images/backImage.jpg";
-
 export default function Hero() {
   const scrollToPreview = () => {
     document
@@ -11,7 +9,7 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center">
       {/* Background image */}
       <img
-        src={backImage}
+        src="/images/backImage.jpg"
         alt="Background portfolio"
         className="absolute inset-0 w-full h-full object-cover"
       />
