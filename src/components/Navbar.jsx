@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
 import logo from "../assets/logo.png"
 
 function Navbar() {
-  const navigate = useNavigate()
-  const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -18,11 +15,13 @@ function Navbar() {
   }, [])
 
   const handleLogoClick = () => {
-    if (location.pathname === "/") {
-      window.scrollTo({ top: 0, behavior: "smooth" })
-    } else {
-      navigate("/")
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const scrollToSection = (id) => {
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
@@ -53,35 +52,21 @@ function Navbar() {
       >
 
         <button
-          onClick={() => navigate("/tienda")}
+          onClick={() => scrollToSection("about")}
           className="hover:opacity-70 transition"
         >
-          Tienda
+          Sobre mí
         </button>
 
         <button
-          onClick={() => navigate("/sobre")}
+          onClick={() => scrollToSection("portfolio")}
           className="hover:opacity-70 transition"
         >
-          Sobre Nosotros
+          Proyectos
         </button>
 
         <button
-          onClick={() => navigate("/faq")}
-          className="hover:opacity-70 transition"
-        >
-          Preguntas Frecuentes
-        </button>
-
-        <button
-          onClick={() => {
-            navigate("/")
-            setTimeout(() => {
-              document
-                .getElementById("contacto")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }, 100)
-          }}
+          onClick={() => scrollToSection("contacto")}
           className="hover:opacity-70 transition"
         >
           Contacto

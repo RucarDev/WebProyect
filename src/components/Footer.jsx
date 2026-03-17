@@ -7,63 +7,59 @@ function Footer() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
 
-        {/* Marca */}
         <div>
           <h3 className="font-bold mb-4 tracking-wide text-white">
-            SHCAKES
+            Rubén · Diseño Gráfico
           </h3>
           <p className="text-sm">
-            Cheese Cakes caseras elaboradas artesanalmente.
-            Sabor auténtico, textura perfecta.
+            Identidad visual, branding y piezas gráficas para marcas que quieren
+            comunicar con claridad y coherencia.
           </p>
         </div>
 
-        {/* Información */}
         <div>
           <h4 className="font-semibold mb-4 text-white">
-            Información Legal
+            Servicios
+          </h4>
+          <ul className="space-y-2 text-sm">
+            <li>Identidad visual y logotipos</li>
+            <li>Redes sociales y contenido digital</li>
+            <li>Diseño editorial y piezas impresas</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold mb-4 text-white">
+            Redes
           </h4>
           <ul className="space-y-2 text-sm">
             <li className="hover:text-white transition cursor-pointer">
-              Términos y condiciones
+              Behance
             </li>
             <li className="hover:text-white transition cursor-pointer">
-              Política de cookies
+              Instagram
             </li>
             <li className="hover:text-white transition cursor-pointer">
-              Política de privacidad
+              Dribbble
             </li>
           </ul>
         </div>
 
-        {/* Métodos de pago */}
-        <div>
-          <h4 className="font-semibold mb-4 text-white">
-            Métodos de pago
-          </h4>
-          <ul className="space-y-2 text-sm">
-            <li>Tarjeta</li>
-            <li>Bizum</li>
-            <li>Efectivo en tienda</li>
-          </ul>
-        </div>
-
-        {/* Contacto */}
         <div>
           <h4 className="font-semibold mb-4 text-white">
             Contacto
           </h4>
           <ul className="space-y-2 text-sm">
-            <li>📍 Calle Dulce 24, Jaén</li>
+            <li>📍 Jaén, España</li>
             <li>📞 600 123 456</li>
-            <li>✉ contacto@shcakes.es</li>
+            <li>✉ hola@rubendesign.es</li>
           </ul>
         </div>
 
       </div>
 
       <div className="mt-16 text-center text-xs text-gray-500">
-        © 2026 SHCAKES. Todos los derechos reservados.
+        © 2026 Rubén · Portfolio de diseño gráfico.
       </div>
 
     </footer>
