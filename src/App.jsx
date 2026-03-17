@@ -1,13 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
 import PortfolioPage from "./pages/PortfolioPage";
 import ProjectPage from "./pages/ProjectPage";
-import SobrePage from "./pages/AboutPage";
-import ContactoPage from "./pages/ContactoPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   return (
@@ -20,12 +19,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/portfolio/:slug" element={<ProjectPage />} />
-          <Route path="/sobre" element={<SobrePage />} />
-          <Route path="/contacto" element={<ContactoPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
-
-      <Footer />
     </div>
   );
 }
