@@ -28,7 +28,7 @@ export const projects = [
       "Hard surface project focused on modeling precision, materials and final presentation.",
 
     hasViewer: true,
-    modelPath: "/public/models/lion_head_1k.gltf",
+    modelPath: "/models/lion_head_1k.gltf",
   },
 
   {
@@ -50,6 +50,6 @@ export const projects = [
       "Hard surface project focused on modeling precision, materials and final presentation.",
 
     hasViewer: true,
-    modelPath: "/public/models/lion_head_1k.gltf",
+    modelPath: "/models/lion_head_1k.gltf",
   },
 ];
