@@ -1,23 +1,27 @@
+import PageTransition from "../components/PageTransition";
+import PageHeader from "../components/PageHeader";
 import { projects } from "../data/projects";
 import ProjectCard from "../components/ProjectCard";
 
 export default function PortfolioPage() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl md:text-5xl font-bold mb-4">
-        Portfolio
-      </h1>
+    <PageTransition>
+      <PageHeader backgroundImage="/images/backImage2.jpg">
+        <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter leading-[0.85]">
+          PORTFOLIO
+        </h1>
+        <p className="mt-6 text-[11px] md:text-xs text-white/70 tracking-[0.25em] max-w-2xl leading-loose">
+          A curated selection of projects including hard surface, environments, animation and tracking.
+        </p>
+      </PageHeader>
 
-      <p className="opacity-70 mb-10 max-w-2xl">
-        A selection of projects including hard surface, environments,
-        animation and tracking.
-      </p>
-
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-        {projects.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </div>
-    </section>
+      <section className="w-full px-8 md:px-16 py-24">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
+      </section>
+    </PageTransition>
   );
 }

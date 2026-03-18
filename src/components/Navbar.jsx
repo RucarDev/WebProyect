@@ -7,10 +7,10 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const navLinkClass = ({ isActive }) =>
-    `transition ${
+    `transition-all duration-300 uppercase tracking-[0.2em] text-[11px] md:text-xs ${
       isActive
-        ? "text-white"
-        : "text-white/80 hover:text-white"
+        ? "text-white font-bold"
+        : "text-white/60 hover:text-white"
     }`;
 
   const handleLogoClick = () => {
@@ -30,47 +30,43 @@ export default function Navbar() {
   return (
     <header
       className={[
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
-        "bg-transparent",
+        "fixed top-0 left-0 w-full z-50 transition-all duration-500",
+        scrolled ? "bg-black/40 backdrop-blur-sm" : "bg-transparent",
       ].join(" ")}
     >
       <nav
         className={[
-          "max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300",
-          scrolled ? "py-2" : "py-4",
+          "w-full px-8 md:px-12 flex items-center justify-between transition-all duration-500",
+          scrolled ? "py-3" : "py-7", // Tamaño equilibrado (ni muy grande ni muy pequeño)
         ].join(" ")}
       >
-
-        {/* LOGO */}
+        {/* LOGO - Pegado a la izquierda */}
         <button
           type="button"
           onClick={handleLogoClick}
-          className="flex items-center gap-3"
+          className="flex items-center"
         >
           <span
             className={[
-              "text-white tracking-[0.25em] font-semibold transition-all duration-300",
-              scrolled ? "text-sm" : "text-base",
+              "text-white tracking-[0.3em] font-bold transition-all duration-500",
+              scrolled ? "text-sm" : "text-lg", // Tamaño del logo más moderado
             ].join(" ")}
           >
             RUBEN PADILLA
           </span>
         </button>
 
-        {/* DESKTOP MENU */}
-        <div className="hidden md:flex items-center gap-8 text-sm">
+        {/* DESKTOP MENU - Pegado a la derecha */}
+        <div className="hidden md:flex items-center gap-10">
           <NavLink to="/" className={navLinkClass}>
             Home
           </NavLink>
-
           <NavLink to="/portfolio" className={navLinkClass}>
             Portfolio
           </NavLink>
-
           <NavLink to="/about" className={navLinkClass}>
             About
           </NavLink>
-
           <NavLink to="/contact" className={navLinkClass}>
             Contact
           </NavLink>
@@ -81,44 +77,17 @@ export default function Navbar() {
           className="md:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
         >
-          ☰
+          {isOpen ? "✕" : "☰"}
         </button>
       </nav>
 
       {/* MOBILE MENU */}
       {isOpen && (
-        <div className="md:hidden px-6 pb-6 flex flex-col gap-4 bg-black/80 border-t border-white/10">
-          <NavLink
-            to="/"
-            className={navLinkClass}
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </NavLink>
-
-          <NavLink
-            to="/portfolio"
-            className={navLinkClass}
-            onClick={() => setIsOpen(false)}
-          >
-            Portfolio
-          </NavLink>
-
-          <NavLink
-            to="/about"
-            className={navLinkClass}
-            onClick={() => setIsOpen(false)}
-          >
-            About
-          </NavLink>
-
-          <NavLink
-            to="/contact"
-            className={navLinkClass}
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
-          </NavLink>
+        <div className="absolute top-full left-0 w-full flex flex-col items-center gap-6 py-10 bg-black/90 backdrop-blur-md border-t border-white/5">
+          <NavLink to="/" className={navLinkClass} onClick={() => setIsOpen(false)}>Home</NavLink>
+          <NavLink to="/portfolio" className={navLinkClass} onClick={() => setIsOpen(false)}>Portfolio</NavLink>
+          <NavLink to="/about" className={navLinkClass} onClick={() => setIsOpen(false)}>About</NavLink>
+          <NavLink to="/contact" className={navLinkClass} onClick={() => setIsOpen(false)}>Contact</NavLink>
         </div>
       )}
     </header>
