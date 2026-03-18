@@ -1,17 +1,25 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const navLinkClass = ({ isActive }) =>
-    `transition-all duration-300 uppercase tracking-[0.2em] text-[11px] md:text-xs ${
-      isActive
-        ? "text-white font-bold"
-        : "text-white/60 hover:text-white"
-    }`;
+  // Detectamos si estamos en la página de detalle de un proyecto
+  const isProjectPage = location.pathname.startsWith("/portfolio/");
+
+  // Clase dinámica para los links del menú
+  const navLinkClass = ({ isActive }) => {
+    const baseClass = "transition-all duration-300 uppercase tracking-[0.2em] text-[11px] md:text-xs";
+    
+    if (isProjectPage) {
+      return `${baseClass} ${isActive ? "text-black font-bold" : "text-black/40 hover:text-black"}`;
+    }
+    
+    return `${baseClass} ${isActive ? "text-white font-bold" : "text-white/60 hover:text-white"}`;
+  };
 
   const handleLogoClick = () => {
     navigate("/");
@@ -31,16 +39,19 @@ export default function Navbar() {
     <header
       className={[
         "fixed top-0 left-0 w-full z-50 transition-all duration-500",
-        scrolled ? "bg-black/40 backdrop-blur-sm" : "bg-transparent",
+        // Fondo dinámico según la página y el scroll
+        scrolled 
+          ? (isProjectPage ? "bg-white/60 backdrop-blur-md" : "bg-black/40 backdrop-blur-sm") 
+          : "bg-transparent",
       ].join(" ")}
     >
       <nav
         className={[
           "w-full px-8 md:px-12 flex items-center justify-between transition-all duration-500",
-          scrolled ? "py-3" : "py-7", // Tamaño equilibrado (ni muy grande ni muy pequeño)
+          scrolled ? "py-3" : "py-7",
         ].join(" ")}
       >
-        {/* LOGO - Pegado a la izquierda */}
+        {/* LOGO */}
         <button
           type="button"
           onClick={handleLogoClick}
@@ -48,15 +59,16 @@ export default function Navbar() {
         >
           <span
             className={[
-              "text-white tracking-[0.3em] font-bold transition-all duration-500",
-              scrolled ? "text-sm" : "text-lg", // Tamaño del logo más moderado
+              "tracking-[0.3em] font-bold transition-all duration-500",
+              isProjectPage ? "text-black" : "text-white",
+              scrolled ? "text-sm" : "text-lg",
             ].join(" ")}
           >
             RUBEN PADILLA
           </span>
         </button>
 
-        {/* DESKTOP MENU - Pegado a la derecha */}
+        {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-10">
           <NavLink to="/" className={navLinkClass}>
             Home
@@ -74,7 +86,7 @@ export default function Navbar() {
 
         {/* MOBILE BUTTON */}
         <button
-          className="md:hidden text-white"
+          className={["md:hidden transition-colors", isProjectPage ? "text-black" : "text-white"].join(" ")}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? "✕" : "☰"}
@@ -83,7 +95,12 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {isOpen && (
-        <div className="absolute top-full left-0 w-full flex flex-col items-center gap-6 py-10 bg-black/90 backdrop-blur-md border-t border-white/5">
+        <div className={[
+          "absolute top-full left-0 w-full flex flex-col items-center gap-6 py-10 backdrop-blur-md border-t",
+          isProjectPage 
+            ? "bg-white/95 border-black/5" 
+            : "bg-black/90 border-white/5"
+        ].join(" ")}>
           <NavLink to="/" className={navLinkClass} onClick={() => setIsOpen(false)}>Home</NavLink>
           <NavLink to="/portfolio" className={navLinkClass} onClick={() => setIsOpen(false)}>Portfolio</NavLink>
           <NavLink to="/about" className={navLinkClass} onClick={() => setIsOpen(false)}>About</NavLink>

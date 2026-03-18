@@ -9,15 +9,38 @@ export const categories = [
 
 export const projects = [
   {
-    slug: "futuristic-rifle",
-    title: "Futuristic Rifle",
-    category: "Hard Surface",
+    slug: "up-hous",
+    title: "Enviroment UP HOUSE",
+    category: "Enviroment",
 
-    cover: "/projects/futuristic-rifle/cover.jpg",
+    cover: "/enviroments/RenderUp10MB.png",
 
     finalRenders: [
-      "/projects/futuristic-rifle/final-1.jpg",
-      "/projects/futuristic-rifle/final-2.jpg",
+     "/enviroments/RenderUpWireframe10MB.png",
+     "/enviroments/RenderUpWireframe10MB.png",
+       
+    ],
+
+    wireframe: "/enviroments/RenderUpWireframe10MB.png",
+    clayRender:  "/enviroments/RenderUpArcilla10MB.png",
+
+    description:
+      "Hard surface project focused on modeling precision, materials and final presentation.",
+
+    hasViewer: true,
+    modelPath: "/public/models/lion_head_1k.gltf",
+  },
+
+  {
+     slug: "up-hous",
+    title: "Enviroment UP HOUSE",
+    category: "Enviroment",
+
+    cover: "/enviroments/RenderUp10MB.png",
+
+    finalRenders: [
+      "/enviroments/RenderUpArcilla10MB.png",
+       "/enviroments/RenderUpWireframe10MB.png",
     ],
 
     wireframe: "/projects/futuristic-rifle/wireframe.jpg",
@@ -27,27 +50,6 @@ export const projects = [
       "Hard surface project focused on modeling precision, materials and final presentation.",
 
     hasViewer: true,
-    modelPath: "/projects/futuristic-rifle/model.gltf",
-  },
-
-  {
-    slug: "abandoned-station",
-    title: "Abandoned Station",
-    category: "Environment",
-
-    cover: "/projects/abandoned-station/cover.jpg",
-
-    finalRenders: [
-      "/projects/abandoned-station/final-1.jpg",
-    ],
-
-    wireframe: "/projects/abandoned-station/wireframe.jpg",
-    clayRender: "/projects/abandoned-station/clay.jpg",
-
-    description:
-      "Environment project focused on lighting, atmosphere and composition.",
-
-    hasViewer: false,
-    modelPath: null,
+    modelPath: "/public/models/lion_head_1k.gltf",
   },
 ];
