@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { projects } from "../data/projects";
 import ThreeDViewer from "../components/ThreeDViewer";
 import PageTransition from "../components/PageTransition";
+import ProjectCard from "../components/ProjectCard";
 
 export default function ProjectPage() {
   const { slug } = useParams();
@@ -17,9 +18,9 @@ export default function ProjectPage() {
 
   return (
     <PageTransition>
-      {/* Fondo off-white natural */}
-      <section className="bg-[#F8F6F3] min-h-screen text-black pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+      {/* Fondo off-white natural sin padding horizontal limitante */}
+      <section className="bg-[#F8F6F3] min-h-screen text-black pt-32 pb-0">
+        <div className="max-w-6xl mx-auto px-6">
           
           <motion.div initial="hidden" animate="visible" variants={anim} className="mb-20">
              <p className="uppercase tracking-[0.3em] text-[10px] font-bold opacity-40 mb-2">
@@ -96,6 +97,16 @@ export default function ProjectPage() {
                 </div>
               </motion.div>
             )}
+          </div>
+        </div>
+
+        {/* Suggestion Grid Navigation */}
+        <div className="max-w-6xl mx-auto px-6 mt-32 border-t border-black/10 pt-20 pb-20">
+          <h3 className="text-[10px] uppercase font-bold tracking-[0.3em] opacity-40 mb-10">More Projects</h3>
+          <div className="grid md:grid-cols-3 gap-10">
+            {projects.filter(p => p.slug !== slug).sort(() => 0.5 - Math.random()).slice(0, 3).map(p => (
+              <ProjectCard key={p.slug} project={p} />
+            ))}
           </div>
         </div>
       </section>

@@ -13,9 +13,40 @@ export default function PortfolioPage() {
     ? projects
     : projects.filter(p => p.category === activeTab);
 
+  const scrollToGrid = () => {
+    const target = document.getElementById("projects-grid");
+    if (!target) return;
+    const targetPos = target.getBoundingClientRect().top + window.pageYOffset;
+    const startPos = window.pageYOffset;
+    const distance = targetPos - startPos;
+    const duration = 1500;
+    let start = null;
+    const animation = (currentTime) => {
+      if (start === null) start = currentTime;
+      const timeElapsed = currentTime - start;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      window.scrollTo(0, startPos + distance * easeProgress);
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+    requestAnimationFrame(animation);
+  };
+
   return (
     <PageTransition>
-      <PageHeader backgroundImage="/images/backImage.jpg">
+      <PageHeader 
+        backgroundImage="/images/backImage.jpg"
+        bottomContent={
+          <button 
+            onClick={scrollToGrid}
+            className="animate-bounce w-14 h-14 flex items-center justify-center border border-white/30 rounded-full hover:bg-white hover:text-black transition-all duration-300"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+          </button>
+        }
+      >
         <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter leading-[0.85]">
           PORTFOLIO
         </h1>
@@ -24,7 +55,7 @@ export default function PortfolioPage() {
         </p>
       </PageHeader>
 
-      <section className="w-full px-8 md:px-16 py-24">
+      <section id="projects-grid" className="w-full px-8 md:px-16 py-24 min-h-screen">
         {/* Tabs de Filtro Animados */}
         <div className="flex flex-wrap gap-2 mb-16 justify-center bg-black/5 p-2 rounded-full border border-black/5 mx-auto w-fit">
           {uniqueCategories.map(cat => (
@@ -47,11 +78,32 @@ export default function PortfolioPage() {
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+        <motion.div 
+          key={activeTab} // <-- ESTO REINICIA LA ANIMACIÓN AL CAMBIAR DE PESTAÑA
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.15 }
+            }
+          }}
+        >
           {filteredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+            <motion.div 
+              key={project.slug}
+              variants={{
+                hidden: { opacity: 0, y: 30, scale: 0.95 },
+                visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
+              }}
+            >
+              <ProjectCard project={project} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
     </PageTransition>
   );

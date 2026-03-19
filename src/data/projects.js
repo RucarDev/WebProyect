@@ -13,14 +13,14 @@ export const projects = [
     title: "Enviroment UP HOUSE",
     category: "Enviroment",
 
-    cover: "/enviroments/CasaUp/RenderUp10MB.png",
+    cover: "/enviroments/CasaUp/RenderUp10MB.webp",
 
     finalRenders: [
-      "/enviroments/CasaUp/RenderUp10MB.png",
+      "/enviroments/CasaUp/RenderUp10MB.webp",
     ],
 
-    wireframe: "/enviroments/CasaUp/RenderUpWireframe10MB.png",
-    clayRender: "/enviroments/CasaUp/RenderUpArcilla10MB.png",
+    wireframe: "/enviroments/CasaUp/RenderUpWireframe10MB.webp",
+    clayRender: "/enviroments/CasaUp/RenderUpArcilla10MB.webp",
 
     description:
       "Render of the house from the movie UP.",
@@ -32,14 +32,14 @@ export const projects = [
     title: "3D Room desing",
     category: "Diorama",
 
-    cover: "/diorama/Habitacion01/HabitacionRender.png",
+    cover: "/diorama/Habitacion01/HabitacionRender.webp",
 
     finalRenders: [
       "/diorama/Habitacion01/RenderTexturaHabitacion.mp4",
 
     ],
     clayVideo: "/diorama/Habitacion01/AnimClayHabitacion.mp4",
-    clayRender: "/diorama/Habitacion01/RenderClayHabitacion.png",
+    clayRender: "/diorama/Habitacion01/RenderClayHabitacion.webp",
 
     description:
       "3D desing of a modern room for teenagers.",
@@ -51,14 +51,14 @@ export const projects = [
     title: "3D Room desing 2",
     category: "Diorama",
 
-    cover: "/diorama/Habitacion02/RenderTexturaHabitacion02.png",
+    cover: "/diorama/Habitacion02/RenderTexturaHabitacion02.webp",
 
     finalRenders: [
       "/diorama/Habitacion02/RenderTexturaHabitacion02.mp4",
 
     ],
     clayVideo: "/diorama/Habitacion02/RenderClayHabitacion02.mp4",
-    clayRender: "/diorama/Habitacion02/RenderClayHabitacion02.png",
+    clayRender: "/diorama/Habitacion02/RenderClayHabitacion02.webp",
 
     description:
       "3D desing of a modern room for teenagers.",
@@ -70,10 +70,10 @@ export const projects = [
     title: "Ancient Temple",
     category: "Enviroment",
 
-    cover: "/enviroments/templo/RenderTemplo4K.png",
+    cover: "/enviroments/templo/RenderTemplo4K.webp",
 
     finalRenders: [
-      "/enviroments/templo/RenderTemploBanner.png",
+      "/enviroments/templo/RenderTemploBanner.webp",
       "/enviroments/templo/RenderTemploAbandonado.mp4",
 
     ],
@@ -86,7 +86,7 @@ export const projects = [
     title: "Body Movements Animations",
     category: "Animations",
 
-    cover: "/animation/animationCover.png",
+    cover: "/animation/animationCover.webp",
 
     finalRenders: [
       "/animation/animation1.mov",

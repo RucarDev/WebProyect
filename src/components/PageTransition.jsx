@@ -3,25 +3,22 @@ import { motion } from "framer-motion";
 const pageVariants = {
   initial: {
     opacity: 0,
-    scale: 1.02,
-    filter: "blur(10px)",
+    y: 20,
   },
   animate: {
     opacity: 1,
-    scale: 1,
-    filter: "blur(0px)",
+    y: 0,
     transition: {
       duration: 0.8,
-      ease: [0.33, 1, 0.68, 1], // Custom cinematic cubic-beizer
+      ease: [0.22, 1, 0.36, 1],
     },
   },
   exit: {
     opacity: 0,
-    scale: 0.98,
-    filter: "blur(10px)",
+    y: -20,
     transition: {
-      duration: 0.5,
-      ease: [0.33, 1, 0.68, 1],
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
     },
   },
 };

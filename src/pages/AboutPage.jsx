@@ -42,6 +42,17 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
+
+            <div className="pt-6">
+              <a 
+                href="/cv.pdf" 
+                download
+                className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-neutral-800 transition-colors"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download CV
+              </a>
+            </div>
           </div>
         </div>
       </section>

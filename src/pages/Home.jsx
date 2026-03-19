@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom"; // IMPORTANTE: Añadimos Link
+import { Link } from "react-router-dom"; 
 import Hero from "../components/Hero";
 import PageTransition from "../components/PageTransition";
 import { projects } from "../data/projects";
+import ParallaxBanner from "../components/ParallaxBanner";
 
 const fadeInUp = {
   hidden: { 
@@ -25,6 +26,7 @@ const fadeInUp = {
 
 export default function Home() {
   const previewProjects = projects.slice(0, 3);
+  const otherProjects = projects.slice(3);
 
   return (
     <PageTransition>
@@ -91,6 +93,23 @@ export default function Home() {
                 </motion.article>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Massive Parallax Projects Feed */}
+        <section className="w-full flex flex-col items-center bg-black">
+          {otherProjects.map(project => (
+            <ParallaxBanner key={project.slug} project={project} />
+          ))}
+
+          {/* All Projects button integrated cleanly below the continuous feed */}
+          <div className="py-32 flex justify-center w-full">
+            <Link 
+              to="/portfolio" 
+              className="px-12 py-4 border border-white/60 text-white rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-500"
+            >
+              View Full Portfolio
+            </Link>
           </div>
         </section>
       </main>
