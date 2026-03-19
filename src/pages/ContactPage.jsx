@@ -14,15 +14,15 @@ export default function ContactPage() {
 
         <div className="space-y-4">
           <a 
-            href="mailto:your-email@example.com" 
+            href="mailto:rubenpadillavi03@gmail.com" 
             className="block text-2xl md:text-4xl font-bold hover:opacity-50 transition-opacity underline underline-offset-8"
           >
-            hello@rubenpadilla.com
+            rubenpadillavi03@gmail.com
           </a>
-          <div className="flex justify-center gap-8 mt-12 text-sm uppercase tracking-[0.2em] font-bold opacity-60">
-            <a href="#" className="hover:opacity-100 transition-opacity">Instagram</a>
-            <a href="#" className="hover:opacity-100 transition-opacity">ArtStation</a>
-            <a href="#" className="hover:opacity-100 transition-opacity">LinkedIn</a>
+          <div className="flex flex-col md:flex-row justify-center gap-8 mt-12 text-center text-sm uppercase tracking-[0.2em] font-bold opacity-60">
+            <a href="https://www.instagram.com/chiky3d/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">@chiky3d (Instagram)</a>
+            <a href="https://www.instagram.com/chiky3d/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">@chiky3d (ArtStation)</a>
+            <a href="https://www.linkedin.com/in/ruben-padilla-avi-99472a22b/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">@ruben-padilla-avi (LinkedIn)</a>
           </div>
         </div>
       </section>

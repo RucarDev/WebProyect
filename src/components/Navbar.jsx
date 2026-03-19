@@ -7,14 +7,14 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Detectamos si estamos en la página de detalle de un proyecto
-  const isProjectPage = location.pathname.startsWith("/portfolio/");
+  // Detectamos si estamos en una página que requiere texto negro en el navbar
+  const isBlackTextPage = location.pathname.startsWith("/portfolio") || location.pathname === "/about" || location.pathname === "/contact";
 
   // Clase dinámica para los links del menú
   const navLinkClass = ({ isActive }) => {
     const baseClass = "transition-all duration-300 uppercase tracking-[0.2em] text-[11px] md:text-xs";
     
-    if (isProjectPage) {
+    if (isBlackTextPage) {
       return `${baseClass} ${isActive ? "text-black font-bold" : "text-black/40 hover:text-black"}`;
     }
     
@@ -41,7 +41,7 @@ export default function Navbar() {
         "fixed top-0 left-0 w-full z-50 transition-all duration-500",
         // Fondo dinámico según la página y el scroll
         scrolled 
-          ? (isProjectPage ? "bg-white/60 backdrop-blur-md" : "bg-black/40 backdrop-blur-sm") 
+          ? (isBlackTextPage ? "bg-white/60 backdrop-blur-md" : "bg-black/40 backdrop-blur-sm") 
           : "bg-transparent",
       ].join(" ")}
     >
@@ -60,7 +60,7 @@ export default function Navbar() {
           <span
             className={[
               "tracking-[0.3em] font-bold transition-all duration-500",
-              isProjectPage ? "text-black" : "text-white",
+              isBlackTextPage ? "text-black" : "text-white",
               scrolled ? "text-sm" : "text-lg",
             ].join(" ")}
           >
@@ -86,7 +86,7 @@ export default function Navbar() {
 
         {/* MOBILE BUTTON */}
         <button
-          className={["md:hidden transition-colors", isProjectPage ? "text-black" : "text-white"].join(" ")}
+          className={["md:hidden transition-colors", isBlackTextPage ? "text-black" : "text-white"].join(" ")}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? "✕" : "☰"}
@@ -97,7 +97,7 @@ export default function Navbar() {
       {isOpen && (
         <div className={[
           "absolute top-full left-0 w-full flex flex-col items-center gap-6 py-10 backdrop-blur-md border-t",
-          isProjectPage 
+          isBlackTextPage 
             ? "bg-white/95 border-black/5" 
             : "bg-black/90 border-white/5"
         ].join(" ")}>

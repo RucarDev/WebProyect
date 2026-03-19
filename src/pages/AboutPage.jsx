@@ -10,8 +10,8 @@ export default function AboutPage() {
 
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <div className="relative">
-             <img
-              src="/profile/avatar.jpg"
+            <img
+              src="/images/backImage2.jpg"
               alt="Profile"
               className="rounded-2xl w-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
             />
