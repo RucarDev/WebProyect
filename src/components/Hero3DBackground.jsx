@@ -7,120 +7,91 @@ function LogoModel() {
   const { scene } = useGLTF("/logo/LogoRWeb_Fondo.glb");
   const modelRef = useRef();
 
-  // Material cristal mágico VISIBLE sobre fondo oscuro
-  const crystalMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    // Cristal semitransparente — menos de 1 para que se vea sobre negro
-    transmission: 0.6,
-    thickness: 2.5,
-    roughness: 0.05,
-    ior: 1.8,
-
-    // Iridiscencia arcoíris
-    iridescence: 1,
-    iridescenceIOR: 1.6,
-    iridescenceThicknessRange: [150, 700],
-
-    // Reflexiones y brillo
-    metalness: 0.1,
-    reflectivity: 1,
+  // Chrome iridiscente: oscuro + espejo + arcoíris azul/morado/rosa
+  // Sin transmission → rendimiento comparable a MeshStandardMaterial
+  const chromeMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color("#050510"),        // base casi negra
+    metalness: 1.0,
+    roughness: 0.04,                          // casi espejo
+    reflectivity: 1.0,
     envMapIntensity: 2.5,
 
-    // Color base visible
-    color: new THREE.Color("#a0c8ff"),
-    emissive: new THREE.Color("#7b2fff"),
-    emissiveIntensity: 0.35,   // Más alto para que se vea siempre
+    // Iridiscencia: crea los destellos azul/morado/rosa como en la imagen
+    iridescence: 1.0,
+    iridescenceIOR: 1.8,
+    iridescenceThicknessRange: [200, 600],    // rango que da azul↔morado↔rosa
 
-    transparent: true,
-    opacity: 1,
+    // Brillo emissivo suave (azul-morado)
+    emissive: new THREE.Color("#2a0a5a"),
+    emissiveIntensity: 0.2,
+
+    transparent: false,
     side: THREE.DoubleSide,
   }), []);
 
   useMemo(() => {
     scene.traverse((child) => {
       if (child.isMesh) {
-        child.material = crystalMaterial;
+        child.material = chromeMaterial;
+        child.castShadow = false;
+        child.receiveShadow = false;
       }
     });
-  }, [scene, crystalMaterial]);
-
-  const colorA = useMemo(() => new THREE.Color("#7b2fff"), []);
-  const colorB = useMemo(() => new THREE.Color("#00e5ff"), []);
+  }, [scene, chromeMaterial]);
 
   useFrame((state) => {
-    if (modelRef.current) {
-      const scrollY = window.scrollY;
-      const vh = window.innerHeight;
-      const scrollProgress = Math.min(scrollY / vh, 1);
-      const time = state.clock.getElapsedTime();
+    if (!modelRef.current) return;
 
-      // Pulso de color emissivo morado ↔ cian
-      const pulse = (Math.sin(time * 1.4) + 1) / 2;
-      crystalMaterial.emissive.lerpColors(colorA, colorB, pulse);
-      crystalMaterial.emissiveIntensity = 0.3 + pulse * 0.25;
+    const scrollY = window.scrollY;
+    const vh = window.innerHeight;
+    const scrollProgress = Math.min(scrollY / vh, 1);
+    const time = state.clock.getElapsedTime();
 
-      // Posición Y
-      modelRef.current.position.y =
-        4 - scrollProgress * (4 - (-1));
+    // Pulso emissivo sutil: morado profundo ↔ azul índigo
+    const pulse = (Math.sin(time * 0.9) + 1) / 2;
+    chromeMaterial.emissiveIntensity = 0.15 + pulse * 0.2;
 
-      // Posición X
-      modelRef.current.position.x =
-        3.5 - scrollProgress * 3.5;
+    // Posición Y
+    modelRef.current.position.y = 4 - scrollProgress * 5;
 
-      // Escala
-      const scale = 6.5 - scrollProgress * (6.5 - 3);
-      modelRef.current.scale.setScalar(scale);
+    // Posición X
+    modelRef.current.position.x = 3.5 - scrollProgress * 3.5;
 
-      // Rotación
-      modelRef.current.rotation.y =
-        -Math.PI / 2 + time * 0.2 + scrollProgress * 2;
-    }
+    // Escala
+    modelRef.current.scale.setScalar(6.5 - scrollProgress * 3.5);
+
+    // Rotación lenta — muestra mejor las reflexiones iridiscentes
+    modelRef.current.rotation.y = -Math.PI / 2 + time * 0.2 + scrollProgress * 2;
   });
 
   return <primitive ref={modelRef} object={scene} />;
 }
 
-function AnimatedLights() {
-  const purpleRef = useRef();
-  const cyanRef   = useRef();
-  const goldRef   = useRef();
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    purpleRef.current.position.set(Math.sin(t * 0.7) * 6,  Math.cos(t * 0.5) * 4, 6);
-    cyanRef.current.position.set(Math.cos(t * 0.6) * 6,    Math.sin(t * 0.8) * 4, 6);
-    goldRef.current.position.set(Math.sin(t * 0.4 + 2) * 5, -2, Math.cos(t * 0.9) * 4 + 4);
-  });
-
-  return (
-    <>
-      <pointLight ref={purpleRef} color="#a855f7" intensity={12} distance={25} />
-      <pointLight ref={cyanRef}   color="#06b6d4" intensity={12} distance={25} />
-      <pointLight ref={goldRef}   color="#fbbf24" intensity={8}  distance={20} />
-    </>
-  );
-}
-
 export default function Hero3DBackground() {
   return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10 bg-[#020202] pointer-events-none">
+    <div className="fixed top-0 left-0 w-full h-full z-[0] pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 45 }}
+        dpr={[1, 1.5]}
         gl={{
-          antialias: true,
+          antialias: false,
+          powerPreference: "high-performance",
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.6,
+          toneMappingExposure: 1.4,
         }}
       >
         <Suspense fallback={null}>
-          {/* Luz ambiente suficiente para ver el modelo */}
-          <ambientLight intensity={1.2} color="#ffffff" />
-          <directionalLight position={[5, 5, 5]} intensity={2} color="#ffffff" />
+          {/* Entorno imprescindible para que el chrome iridiscente refleje */}
+          <Environment preset="night" />
 
-          {/* Luces de color para cáusticas mágicas */}
-          <AnimatedLights />
+          {/* Luz fría azulada desde arriba */}
+          <directionalLight position={[3, 8, 5]} intensity={3} color="#a0c0ff" />
 
-          {/* Entorno que el cristal refleja */}
-          <Environment preset="studio" />
+          {/* Relleno morado desde abajo */}
+          <pointLight position={[-4, -4, 3]} color="#7b2fff" intensity={20} distance={25} />
+
+          {/* Acento rosa-magenta desde la derecha */}
+          <pointLight position={[6, 1, 4]}  color="#c026d3" intensity={15} distance={22} />
 
           <LogoModel />
         </Suspense>
