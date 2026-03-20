@@ -23,8 +23,7 @@ function App() {
       smoothTouch: false,
       wheelMultiplier: 1.1
     }}>
-      <div className="bg-background text-primary min-h-screen flex flex-col cursor-none">
-
+      <div className="bg-background text-primary min-h-screen flex flex-col">
         <Navbar />
         <ScrollToTop />
 

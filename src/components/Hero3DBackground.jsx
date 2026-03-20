@@ -87,7 +87,7 @@ function LogoModel() {
       targetX = -6 + (p3 * 6);    // -5.5 -> 0 (Vuelve al centro)
       targetY = 1.0 - (p3 * 0.3);     // 1.0 -> 0.2
       // MANTENER TAMAÑO PEQUEÑO: Se queda en 2.2 para no tapar el botón final
-      targetScale = 4 - (p3 * 1.65);
+      targetScale = 4 - (p3 * 1.70);
     }
 
     modelRef.current.position.x = targetX;
