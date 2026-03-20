@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <footer className="mt-auto border-t border-white/10 bg-black text-white/80">
+    <footer className="relative z-50 mt-auto border-t border-white/10 bg-black text-white/80">
       <div className="w-full px-8 md:px-16 py-12 flex flex-col md:flex-row gap-8 md:items-center md:justify-between">
-        
+
         {/* LEFT SIDE: Branding & Copyright */}
         <div className="space-y-1">
           <p className="text-xs md:text-sm tracking-widest font-bold text-white uppercase">
@@ -20,7 +20,7 @@ function Footer() {
             Instagram <span className="text-lg leading-none">↗</span>
           </a>
           <a href="https://www.instagram.com/chiky3d/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-300">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
             ArtStation <span className="text-lg leading-none">↗</span>
           </a>
           <a href="https://www.linkedin.com/in/ruben-padilla-avi-99472a22b/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-300">

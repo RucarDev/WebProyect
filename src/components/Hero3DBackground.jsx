@@ -43,22 +43,56 @@ function LogoModel() {
     if (!modelRef.current) return;
 
     const scrollY = window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
     const vh = window.innerHeight;
-    const scrollProgress = Math.min(scrollY / vh, 1);
+    // Progreso de scroll real de toda la página (0 a 1)
+    const scrollProgress = Math.min(scrollY / (documentHeight - vh), 1);
     const time = state.clock.getElapsedTime();
 
     // Pulso emissivo sutil: morado profundo ↔ azul índigo
     const pulse = (Math.sin(time * 0.9) + 1) / 2;
     chromeMaterial.emissiveIntensity = 0.15 + pulse * 0.2;
 
-    // Posición Y
-    modelRef.current.position.y = 4 - scrollProgress * 5;
+    // --- LÓGICA DE ANIMACIÓN POR FASES ---
+    let targetX, targetY, targetScale;
 
-    // Posición X
-    modelRef.current.position.x = 3.5 - scrollProgress * 3.5;
+    if (scrollProgress < 0.42) {
+      // --- FASE 1: ENTRADA (0% a 42%) ---
+      const p1 = scrollProgress / 0.42;
 
-    // Escala
-    modelRef.current.scale.setScalar(6.5 - scrollProgress * 3.5);
+      targetX = 3.5 - (p1 * 3.5);     // 3.5 -> 0 (Centro)
+      targetY = 4.0 - (p1 * 2.5);     // 4.0 -> 1.5
+      targetScale = 6.5 - (p1 * 1.5); // 6.5 -> 5.0
+
+    } else if (scrollProgress < 0.55) {
+      // --- FASE 2: DESPLAZAMIENTO RÁPIDO (42% a 55%) ---
+      // El logo vuela a la izquierda (-5.5) y se encoge bastante (2.2)
+      const p2 = (scrollProgress - 0.42) / 0.13;
+
+      targetX = 0 - (p2 * 6);       // 0 -> -5.5
+      targetY = 1.5 - (p2 * 0.5);     // 1.5 -> 1.0
+      targetScale = 5.0 - (p2 * 1); // 5.0 -> 2.2 (Aquí es donde se hace pequeño)
+
+    } else if (scrollProgress < 0.80) {
+      // --- FASE EXTRA: PAUSA (55% a 80%) ---
+      // Mantenemos el tamaño pequeño y la posición lateral
+      targetX = -6;
+      targetY = 1.0;
+      targetScale = 4;
+
+    } else {
+      // --- FASE 3: REGRESO AL CENTRO (80% a 100%) ---
+      const p3 = (scrollProgress - 0.80) / 0.20;
+
+      targetX = -6 + (p3 * 6);    // -5.5 -> 0 (Vuelve al centro)
+      targetY = 1.0 - (p3 * 0.001);     // 1.0 -> 0.2
+      // MANTENER TAMAÑO PEQUEÑO: Se queda en 2.2 para no tapar el botón final
+      targetScale = 4 - (p3 * 1.65);
+    }
+
+    modelRef.current.position.x = targetX;
+    modelRef.current.position.y = targetY;
+    modelRef.current.scale.setScalar(targetScale);
 
     // Rotación lenta — muestra mejor las reflexiones iridiscentes
     modelRef.current.rotation.y = -Math.PI / 2 + time * 0.2 + scrollProgress * 2;
@@ -91,7 +125,7 @@ export default function Hero3DBackground() {
           <pointLight position={[-4, -4, 3]} color="#7b2fff" intensity={20} distance={25} />
 
           {/* Acento rosa-magenta desde la derecha */}
-          <pointLight position={[6, 1, 4]}  color="#c026d3" intensity={15} distance={22} />
+          <pointLight position={[6, 1, 4]} color="#c026d3" intensity={15} distance={22} />
 
           <LogoModel />
         </Suspense>

@@ -29,8 +29,8 @@ export default function Home() {
         <div className="relative z-10">
           <Hero />
 
-          <section id="portfolio-preview" className="relative w-full py-32 px-8 md:px-16 text-white">
-            <div className="max-w-7xl mx-auto">
+          <section id="portfolio-preview" className="relative w-full py-32 px-8 md:px-16 text-white min-h-screen">
+            <div className="max-w-7xl mx-auto relative z-10">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -50,7 +50,7 @@ export default function Home() {
                 {previewProjects.map((project, idx) => (
                   /* KEY ÚNICA corregida para evitar el error 'animations' */
                   <Link key={`work-${project.slug}-${idx}`} to={`/portfolio/${project.slug}`} className="group block h-full">
-                    <div className="aspect-video overflow-hidden rounded-xl bg-neutral-900/40 backdrop-blur-md border border-white/10">
+                    <div className="aspect-video overflow-hidden rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 group-hover:border-white/20 transition-colors duration-500 shadow-2xl">
                       <img
                         src={project.cover}
                         alt={project.title}
@@ -67,7 +67,23 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="w-full">
+          <section className="w-full pb-80">
+            <div className="max-w-7xl mx-auto px-8 md:px-16 mb-20">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-end text-right"
+              >
+                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter mb-4 uppercase text-white/90">
+                  Explore More Projects
+                </h2>
+                <p className="text-white/60 uppercase text-[11px] tracking-[0.3em]">
+                  Exploring different styles and techniques
+                </p>
+              </motion.div>
+            </div>
+
             {otherProjects.map((project, idx) => (
               /* KEY ÚNICA corregida aquí también */
               <ParallaxBanner key={`banner-${project.slug}-${idx}`} project={project} />
