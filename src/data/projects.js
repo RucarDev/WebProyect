@@ -10,8 +10,8 @@ export const categories = [
 export const projects = [
   {
     slug: "up-house",
-    title: "Enviroment UP HOUSE",
-    category: "Enviroment",
+    title: "Environment UP HOUSE",
+    category: "Environment",
 
     cover: "/enviroments/CasaUp/RenderUp10MB.webp",
 
@@ -29,7 +29,7 @@ export const projects = [
 
   {
     slug: "room-1",
-    title: "3D Room desing",
+    title: "3D Room design",
     category: "Diorama",
 
     cover: "/diorama/Habitacion01/HabitacionRender.webp",
@@ -42,13 +42,13 @@ export const projects = [
     clayRender: "/diorama/Habitacion01/RenderClayHabitacion.webp",
 
     description:
-      "3D desing of a modern room for teenagers.",
+      "3D design of a modern room for teenagers.",
 
 
   },
   {
     slug: "room-2",
-    title: "3D Room desing 2",
+    title: "3D Room design 2",
     category: "Diorama",
 
     cover: "/diorama/Habitacion02/RenderTexturaHabitacion02.webp",
@@ -61,14 +61,14 @@ export const projects = [
     clayRender: "/diorama/Habitacion02/RenderClayHabitacion02.webp",
 
     description:
-      "3D desing of a modern room for teenagers.",
+      "3D design of a modern room for teenagers.",
 
 
   },
   {
     slug: "temple",
     title: "Ancient Temple",
-    category: "Enviroment",
+    category: "Environment",
 
     cover: "/enviroments/templo/RenderTemplo4K.webp",
 
