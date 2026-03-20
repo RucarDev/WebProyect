@@ -105,7 +105,7 @@ export default function ProjectPage() {
           <h3 className="text-[10px] uppercase font-bold tracking-[0.3em] opacity-40 mb-10">More Projects</h3>
           <div className="grid md:grid-cols-3 gap-10">
             {projects.filter(p => p.slug !== slug).sort(() => 0.5 - Math.random()).slice(0, 3).map(p => (
-              <ProjectCard key={p.slug} project={p} />
+              <ProjectCard key={p.slug} project={p} theme="light" />
             ))}
           </div>
         </div>
