@@ -45,7 +45,7 @@ export default function AboutPage() {
 
             <div className="pt-6">
               <a
-                href="/ CV.pdf"
+                href="/CV.pdf"
                 download
                 className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-neutral-800 transition-colors"
               >
