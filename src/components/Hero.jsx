@@ -44,7 +44,7 @@ export default function Hero() {
           onClick={scrollToPreview}
           className="px-10 py-3 border border-white/60 rounded-full text-sm tracking-wide bg-white/5 hover:bg-white/15 transition"
         >
-          VIEW PORTFOLIO
+          VIEW SELECTED WORK
         </button>
       </div>
     </PageHeader>

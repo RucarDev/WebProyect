@@ -11,7 +11,7 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <div className="relative">
             <img
-              src="/images/backImage2.jpg"
+              src="/images/me.jpeg"
               alt="Profile"
               className="rounded-2xl w-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
             />
@@ -45,7 +45,7 @@ export default function AboutPage() {
 
             <div className="pt-6">
               <a
-                href="/cv.pdf"
+                href="/ CV.pdf"
                 download
                 className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-neutral-800 transition-colors"
               >
