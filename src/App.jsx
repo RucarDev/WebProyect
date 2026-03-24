@@ -17,12 +17,15 @@ function App() {
   const location = useLocation();
 
   return (
-    <ReactLenis root options={{
-      lerp: 0.1,
-      duration: 1.5,
-      smoothTouch: false,
-      wheelMultiplier: 1.1
-    }}>
+    // App.jsx - Solo cambiamos las opciones de ReactLenis
+<ReactLenis root options={{
+  lerp: 0.05, // Bajamos un poco para que el salto sea más limpio
+  duration: 1.5,
+  smoothTouch: true,
+  syncTouch: false, // Cambiamos a false para que no bloquee eventos nativos en móviles
+  wheelMultiplier: 1.0,
+  touchInertiaMultiplier: 1.5,
+}}>
       <div className="bg-background text-primary min-h-screen flex flex-col">
         <Navbar />
         <ScrollToTop />

@@ -1,33 +1,18 @@
 import PageHeader from "./PageHeader";
+import { useLenis } from "@studio-freight/react-lenis";
 
 export default function Hero() {
+  const lenis = useLenis();
+
   const scrollToPreview = () => {
     const target = document.getElementById("portfolio-preview");
-    if (!target) return;
+    if (!target || !lenis) return;
 
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    const duration = 1500; // Duración en milisegundos (más largo = más cine)
-    let start = null;
-
-    // Función de "Easing" (Cubic Out): rápido al principio, muy lento al final
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-    const animation = (currentTime) => {
-      if (start === null) start = currentTime;
-      const timeElapsed = currentTime - start;
-      const progress = Math.min(timeElapsed / duration, 1);
-      const easeProgress = easeOutCubic(progress);
-
-      window.scrollTo(0, startPosition + distance * easeProgress);
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      }
-    };
-
-    requestAnimationFrame(animation);
+    // Dejamos que Lenis maneje el scroll para no romper el fondo 3D
+    lenis.scrollTo(target, {
+      duration: 1.5,
+      easing: (t) => 1 - Math.pow(1 - t, 3) // Tu "Cubic Out" original
+    });
   };
 
   return (
