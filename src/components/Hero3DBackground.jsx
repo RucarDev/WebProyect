@@ -45,56 +45,55 @@ function LogoModel() {
     const scrollY = window.scrollY;
     const documentHeight = document.documentElement.scrollHeight;
     const vh = window.innerHeight;
-    // Progreso de scroll real de toda la página (0 a 1)
     const scrollProgress = Math.min(scrollY / (documentHeight - vh), 1);
     const time = state.clock.getElapsedTime();
 
-    // Pulso emissivo sutil: morado profundo ↔ azul índigo
+    // Pulso emissivo
     const pulse = (Math.sin(time * 0.9) + 1) / 2;
     chromeMaterial.emissiveIntensity = 0.15 + pulse * 0.2;
 
-    // --- LÓGICA DE ANIMACIÓN POR FASES ---
+    // --- 1. CALCULAMOS LAS POSICIONES OBJETIVO ---
     let targetX, targetY, targetScale;
 
     if (scrollProgress < 0.42) {
       // --- FASE 1: ENTRADA (0% a 42%) ---
       const p1 = scrollProgress / 0.42;
-
-      targetX = 3.5 - (p1 * 3.5);     // 3.5 -> 0 (Centro)
+      targetX = 3.5 - (p1 * 3.5);     // 3.5 -> 0
       targetY = 4.0 - (p1 * 2.5);     // 4.0 -> 1.5
       targetScale = 6.5 - (p1 * 1.5); // 6.5 -> 5.0
 
-    } else if (scrollProgress < 0.55) {
-      // --- FASE 2: DESPLAZAMIENTO RÁPIDO (42% a 55%) ---
-      // El logo vuela a la izquierda (-5.5) y se encoge bastante (2.2)
-      const p2 = (scrollProgress - 0.42) / 0.13;
-
-      targetX = 0 - (p2 * 6);       // 0 -> -5.5
-      targetY = 1.5 - (p2 * 0.5);     // 1.5 -> 1.0
-      targetScale = 5.0 - (p2 * 1); // 5.0 -> 2.2 (Aquí es donde se hace pequeño)
+    } else if (scrollProgress < 0.52) {
+      // --- FASE 2: DESPLAZAMIENTO (42% a 55%) ---
+      const p2 = (scrollProgress - 0.42) / 0.10;
+      targetX = 0 - (p2 * 5.5);       // 0 -> -5.5 (Ajustado a tu valor original)
+      targetY = 1.5 - (p2 * 1.4);     // 1.5 -> 1.0
+      targetScale = 5.0 - (p2 * 1.0); // 5.0 -> 4.0
 
     } else if (scrollProgress < 0.80) {
       // --- FASE EXTRA: PAUSA (55% a 80%) ---
-      // Mantenemos el tamaño pequeño y la posición lateral
-      targetX = -6;
-      targetY = 1.7;
-      targetScale = 4;
+      targetX = -5.5;                 // Congelado en -5.5
+      targetY = 0.1;                  // Congelado en 1.0
+      targetScale = 4.0;              // Congelado en 4.0
 
     } else {
-      // --- FASE 3: REGRESO AL CENTRO (80% a 100%) ---
+      // --- FASE 3: REGRESO (80% a 100%) ---
       const p3 = (scrollProgress - 0.80) / 0.20;
-
-      targetX = -6 + (p3 * 6);    // -5.5 -> 0 (Vuelve al centro)
-      targetY = 1.7 ;     // 1.0 -> 0.2
-      // MANTENER TAMAÑO PEQUEÑO: Se queda en 2.2 para no tapar el botón final
-      targetScale = 4 - (p3 * 1.70);
+      targetX = -5.5 + (p3 * 5.5);    // -5.5 -> 0
+      targetY = 0.1;                  // Se mantiene en 1.0
+      targetScale = 4.0 - (p3 * 1.5); // 4.0 -> 2.3
     }
 
-    modelRef.current.position.x = targetX;
-    modelRef.current.position.y = targetY;
-    modelRef.current.scale.setScalar(targetScale);
+    // --- 2. APLICAMOS 'LERP' PARA UN MOVIMIENTO FLUIDO (EL SECRETO) ---
+    // El 0.08 es la velocidad de suavizado. Ajusta este número si lo quieres más rápido (0.15) o más lento (0.05)
+    modelRef.current.position.x = THREE.MathUtils.lerp(modelRef.current.position.x, targetX, 0.1);
+    modelRef.current.position.y = THREE.MathUtils.lerp(modelRef.current.position.y, targetY, 0.1);
 
-    // Rotación lenta — muestra mejor las reflexiones iridiscentes
+    // Para la escala usamos el valor actual en X como referencia
+    const currentScale = modelRef.current.scale.x;
+    const lerpedScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.1);
+    modelRef.current.scale.setScalar(lerpedScale);
+
+    // Rotación suave
     modelRef.current.rotation.y = -Math.PI / 2 + time * 0.2 + scrollProgress * 2;
   });
 
@@ -103,7 +102,8 @@ function LogoModel() {
 
 export default function Hero3DBackground() {
   return (
-    <div className="fixed top-0 left-0 w-full h-full z-[0] pointer-events-none">
+    // position: fixed, z-[0] y el bg oscuro para ser la base de toda la web
+    <div className="fixed top-0 left-0 w-full h-full z-[0] pointer-events-none bg-[#020202]">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 45 }}
         dpr={[1, 1.5]}
