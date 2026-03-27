@@ -17,20 +17,38 @@ export default function Hero() {
 
   return (
     <PageHeader>
-      <h1 className="-ml-2 text-6xl md:text-9xl font-extrabold tracking-tighter leading-[0.85]">
-        <span className="block">RUBEN</span>
-        <span className="block">PADILLA</span>
-      </h1>
-      <p className="mt-6 text-[10px] md:text-xs text-white/80 tracking-[0.2em] max-w-lg">
-        Visuals: <span className="font-semibold text-white">Ruben Padilla</span>, Dev: <span className="font-semibold text-white">Carlos Padilla</span>, Location: <span className="font-semibold text-white">Jaén</span>, <br className="md:hidden" /> Typology: <span className="font-semibold text-white">Graphic Design & 3D</span>
-      </p>
-      <div className="mt-10 w-full flex justify-center">
-        <button
-          onClick={scrollToPreview}
-          className="px-10 py-3 border border-white/60 rounded-full text-sm tracking-wide bg-white/5 hover:bg-white/15 transition"
-        >
-          VIEW SELECTED WORK
-        </button>
+      <div className="relative w-full h-[90vh] md:h-screen flex flex-col justify-center">
+
+        {/* Título, Descripción y Botón (Mantiene tu formato original) */}
+        <div>
+          <h1 className="-ml-2 text-6xl md:text-9xl font-extrabold tracking-tighter leading-[0.85]">
+            <span className="block">RUBEN</span>
+            <span className="block">PADILLA</span>
+          </h1>
+
+          <p className="mt-6 text-[10px] md:text-xs text-white/80 tracking-[0.2em] max-w-lg uppercase">
+            A PORTFOLIO OF A GRAPHIC DESIGNER
+          </p>
+
+          <div className="mt-10 w-full flex justify-center">
+            <button
+              onClick={scrollToPreview}
+              className="px-10 py-3 border border-white/60 rounded-full text-sm tracking-wide bg-white/5 hover:bg-white/15 transition"
+            >
+              VIEW SELECTED WORK
+            </button>
+          </div>
+        </div>
+
+        {/* Créditos: Forzados a romper el contenedor y ocupar toda la pantalla */}
+        {/* Créditos: Ajusta los valores de text-[px] según prefieras */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-full md:w-screen px-6 md:px-12 flex flex-row justify-between items-center text-[7px] md:text-[8px] lg:text-[10px] text-white tracking-[0.2em] uppercase whitespace-nowrap opacity-90">
+          <span>Visuals: <span className="font-semibold text-white">Ruben Padilla</span></span>
+          <span>Dev: <span className="font-semibold text-white">Carlos Padilla</span></span>
+          <span>Location: <span className="font-semibold text-white">Jaén</span></span>
+          <span>Typology: <span className="font-semibold text-white">Graphic Design & 3D</span></span>
+        </div>
+
       </div>
     </PageHeader>
   );

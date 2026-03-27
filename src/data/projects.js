@@ -100,4 +100,43 @@ export const projects = [
 
 
   },
+  {
+    slug: "room-3",
+    title: "3D Room design 3",
+    category: "Diorama",
+
+    cover: "/diorama/Habitacion03/RenderHabitacion03.png",
+
+    finalRenders: [
+      "/diorama/Habitacion03/RenderHabitacion03.png",
+
+    ],
+    clayRender: "/diorama/Habitacion03/RenderClayHabitacion03.png",
+
+
+    description:
+      "3D design of a modern dream room.",
+
+
+  },
+  {
+    slug: "street-model",
+    title: "3D street enviroment",
+    category: "Environment",
+
+    cover: "/enviroments/Street/TrainCover.png",
+
+    finalRenders: [
+      "/enviroments/Street/ProcesoCalle.mp4",
+      "/enviroments/Street/RenderCalleTextura.mp4",
+
+    ],
+    clayVideo: "/enviroments/Street/RenderCalleClay.mp4",
+
+
+    description:
+      "3D design of a street enviroment.",
+
+
+  },
 ];

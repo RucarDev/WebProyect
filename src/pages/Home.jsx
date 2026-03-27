@@ -7,8 +7,8 @@ import Hero3DBackground from "../components/Hero3DBackground";
 import PageTransition from "../components/PageTransition";
 import { projects } from "../data/projects";
 import Magnetic from "../components/Magnetic";
-import ProjectCard from "../components/ProjectCard";
 import Loader from "../components/Loader";
+import CircularProjectsGallery from "../components/CircularProjectsGallery";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40, filter: "blur(10px)", scale: 0.98 },
@@ -20,8 +20,9 @@ const fadeInUp = {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const previewProjects = projects.slice(0, 3);
-  const otherProjects = projects.slice(3);
+
+  // Tomamos los primeros 5 proyectos para el carrusel circular
+  const carouselProjects = projects.slice(0, 5);
 
   const lenis = useLenis();
   const isScrolling = useRef(false);
@@ -46,7 +47,6 @@ export default function Home() {
         return;
       }
 
-      // Sensibilidad al máximo (10) para no permitir pequeños scroll
       if (Math.abs(e.deltaY) < 10) return;
 
       const sections = Array.from(document.querySelectorAll('.snap-section'));
@@ -100,117 +100,136 @@ export default function Home() {
               <Hero />
             </div>
 
-            {/* 2. SELECTED WORK */}
-            <section id="portfolio-preview" className="snap-section relative w-full py-32 px-8 md:px-16 min-h-screen">
-              <div className="max-w-7xl mx-auto relative z-10">
+            {/* 2. SELECTED WORK (ALINEADO A LA IZQUIERDA) */}
+            <section id="portfolio-preview" className="snap-section relative w-full py-32 px-0 min-h-screen flex flex-col justify-center overflow-hidden">
+              <div className="w-full relative z-10">
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, amount: 0.3 }}
                   variants={fadeInUp}
-                  className="mb-16 flex flex-col items-start"
+                  className="mb-8 md:mb-16 flex flex-col items-start text-left px-8 md:px-16 w-full max-w-7xl mx-auto"
                 >
                   <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 uppercase text-white">
                     Selected Work
                   </h2>
                   <p className="text-white/60 max-w-2xl uppercase text-[11px] tracking-[0.25em]">
-                    A curated selection of my 3D explorations.
+                    Drag to explore my curated 3D pieces.
                   </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20">
-                  {previewProjects.map((project) => (
-                    <motion.div
-                      key={`work-${project.slug}`}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true, amount: 0.1 }}
-                      variants={fadeInUp}
-                    >
-                      <ProjectCard project={project} />
-                    </motion.div>
-                  ))}
+                <div className="w-full">
+                  <CircularProjectsGallery projects={carouselProjects} />
                 </div>
               </div>
             </section>
 
-            {/* 3. EXPLORE MORE */}
-            <section className="w-full">
-              <div className="max-w-7xl mx-auto px-8 md:px-16 flex flex-col items-end">
+            {/* 3. HOW I WORK - FASE 1 (NUEVA SECCIÓN INDEPENDIENTE) */}
+            <section className="snap-section relative w-full py-20 min-h-screen flex flex-col justify-center items-center overflow-hidden">
+              <div className="w-full relative z-10 max-w-[90rem] mx-auto px-8 md:px-16">
 
-                {otherProjects.map((project, idx) => {
-                  const isFirst = idx === 0;
+                {/* Cabecera de la sección - Alineada a la derecha */}
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: false, amount: 0.3 }}
+                  variants={fadeInUp}
+                  className="mb-12 md:mb-20 flex flex-col items-end text-right w-full"
+                >
+                  <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 uppercase text-white">
+                    How I Work
+                  </h2>
+                  <p className="text-white/60 max-w-2xl uppercase text-[11px] tracking-[0.25em]">
+                    Behind the scenes: Modeling & Animation.
+                  </p>
+                </motion.div>
 
-                  // TARJETAS EXPLORE LIMPIAS DE BORDES Y FONDOS NEGROS
-                  const projectCard = (
-                    <Link to={`/portfolio/${project.slug}`} className="group block w-full">
-                      <div className="relative overflow-hidden rounded-2xl bg-white/[0.02] backdrop-blur-sm transition-all duration-500">
-                        <div className="p-4 md:p-6">
-                          {/* Cambiado bg-black por bg-transparent */}
-                          <div className="relative aspect-[21/9] md:aspect-[2.5/1] overflow-hidden rounded-xl bg-transparent">
-                            <img
-                              src={project.cover}
-                              alt={project.title}
-                              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-70 group-hover:opacity-90"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors duration-500">
-                              {/* El botón de Explore sí mantiene su propio bordecito sutil */}
-                              <div className="px-8 py-3.5 border border-white/30 group-hover:border-white/80 text-white rounded-full text-[10px] font-bold uppercase tracking-[0.3em] bg-white/5 group-hover:bg-white/20 backdrop-blur-md transition-all duration-300">
-                                Explore Project
-                              </div>
-                            </div>
-                          </div>
-                          {/* Eliminado el border de la caja de texto */}
-                          <div className="mt-6 p-8 rounded-xl bg-white/[0.04] backdrop-blur-md text-right transition-all duration-500 group-hover:bg-white/[0.07]">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/40 mb-3 font-medium">{project.category}</p>
-                            <h3 className="text-2xl md:text-3xl font-bold tracking-tight uppercase text-white mb-4">{project.title}</h3>
-                            <p className="text-sm md:text-base text-white/50 leading-relaxed max-w-2xl ml-auto uppercase text-[11px] tracking-widest">
-                              {project.description || "Exploring the boundaries of 3D design and digital art."}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  );
+                {/* Fila 1: Vídeo a la izquierda (Gigante), Texto a la derecha */}
+                <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 w-full">
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full lg:w-[60%] relative group rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-sm aspect-video shadow-2xl shrink-0"
+                  >
+                    <div className="absolute top-4 left-4 z-20 px-5 py-2 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                      Phase 01
+                    </div>
+                    <video
+                      src="/animation/TimeLapseCreacionRobot.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-700 group-hover:scale-105 transform"
+                    />
+                  </motion.div>
 
-                  if (isFirst) {
-                    return (
-                      <div key={`explore-first-${project.slug}`} className="snap-section w-full min-h-screen flex flex-col justify-center pt-20 pb-10">
-                        <div className="text-right mb-10">
-                          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter mb-4 uppercase text-white">
-                              Explore More Projects
-                            </h2>
-                            <p className="text-white/70 uppercase text-[11px] tracking-[0.3em]">
-                              Exploring different styles and techniques
-                            </p>
-                          </motion.div>
-                        </div>
-                        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="w-full max-w-4xl self-end">
-                          {projectCard}
-                        </motion.div>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <motion.div
-                      key={`explore-mid-${project.slug}-${idx}`}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true, amount: 0.2 }}
-                      variants={fadeInUp}
-                      className="snap-section w-full max-w-4xl min-h-screen flex items-center py-10"
-                    >
-                      {projectCard}
-                    </motion.div>
-                  );
-                })}
+                  <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full lg:w-[40%] flex flex-col items-start text-left"
+                  >
+                    <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-widest text-white mb-6">
+                      3D Modeling
+                    </h3>
+                    <p className="text-white/50 text-base md:text-lg leading-relaxed uppercase text-[11px] tracking-widest">
+                      Every great project starts with a solid foundation. In this phase, raw geometry is sculpted into form. Careful attention to topology and edge flow ensures the model is perfectly optimized for the stages to come.
+                    </p>
+                  </motion.div>
+                </div>
               </div>
             </section>
 
-            {/* 4. BOTÓN FINAL */}
-            {/* 4. BOTÓN FINAL */}
+            {/* 4. HOW I WORK - FASE 2 (NUEVA SECCIÓN INDEPENDIENTE) */}
+            <section className="snap-section relative w-full py-20 min-h-screen flex flex-col justify-center items-center overflow-hidden">
+              <div className="w-full relative z-10 max-w-[90rem] mx-auto px-8 md:px-16">
+
+                {/* Fila 2: Texto a la izquierda, Vídeo a la derecha (Gigante) */}
+                <div className="flex flex-col lg:flex-row-reverse items-center gap-10 lg:gap-20 w-full">
+                  <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full lg:w-[60%] relative group rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-sm aspect-video shadow-2xl shrink-0"
+                  >
+                    <div className="absolute top-4 left-4 z-20 px-5 py-2 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                      Phase 02
+                    </div>
+                    <video
+                      src="/animation/TimeLapseModelando.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-700 group-hover:scale-105 transform"
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full lg:w-[40%] flex flex-col items-start lg:items-end text-left lg:text-right"
+                  >
+                    <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-widest text-white mb-6">
+                      Animation
+                    </h3>
+                    <p className="text-white/50 text-base md:text-lg leading-relaxed uppercase text-[11px] tracking-widest">
+                      Breathing life into static pixels. Through physics simulations, precise keyframing, and dynamic camera movements, the scene is transformed into an immersive and captivating visual experience.
+                    </p>
+                  </motion.div>
+                </div>
+
+              </div>
+            </section>
+
+            {/* 5. BOTÓN FINAL */}
             <div className="snap-section w-full h-[60vh] flex flex-col justify-end items-center pb-24">
               <Magnetic>
                 <Link

@@ -1,5 +1,6 @@
-import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { useParams, Link } from "react-router-dom"; // Añadido Link
+import { motion, AnimatePresence } from "framer-motion"; // Añadido AnimatePresence
 import { projects } from "../data/projects";
 import ThreeDViewer from "../components/ThreeDViewer";
 import PageTransition from "../components/PageTransition";
@@ -8,6 +9,9 @@ import ProjectCard from "../components/ProjectCard";
 export default function ProjectPage() {
   const { slug } = useParams();
   const project = projects.find((p) => p.slug === slug);
+
+  // Estado para controlar qué imagen/vídeo está en pantalla completa
+  const [fullscreenMedia, setFullscreenMedia] = useState(null);
 
   if (!project) return null;
 
@@ -18,57 +22,108 @@ export default function ProjectPage() {
 
   return (
     <PageTransition>
+      {/* --- LIGHTBOX MODAL --- */}
+      <AnimatePresence>
+        {fullscreenMedia && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setFullscreenMedia(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-10 cursor-zoom-out"
+          >
+            {fullscreenMedia.type === "video" ? (
+              <video
+                src={fullscreenMedia.src}
+                autoPlay loop muted playsInline
+                className="max-w-full max-h-full rounded-xl object-contain shadow-2xl"
+              />
+            ) : (
+              <img
+                src={fullscreenMedia.src}
+                alt="Fullscreen Preview"
+                className="max-w-full max-h-full rounded-xl object-contain shadow-2xl"
+              />
+            )}
+
+            {/* Botón de cerrar para mayor claridad */}
+            <div className="absolute top-8 right-8 text-white/50 text-xs tracking-widest uppercase font-bold">
+              Click anywhere to close
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Fondo off-white natural sin padding horizontal limitante */}
       <section className="bg-[#F8F6F3] min-h-screen text-black pt-32 pb-0">
         <div className="max-w-6xl mx-auto px-6">
-          
+
           <motion.div initial="hidden" animate="visible" variants={anim} className="mb-20">
-             <p className="uppercase tracking-[0.3em] text-[10px] font-bold opacity-40 mb-2">
-               {project.category}
-             </p>
-             <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-8">
-               {project.title}
-             </h1>
-             <p className="text-xl opacity-70 max-w-2xl leading-relaxed">
-               {project.description}
-             </p>
+            <p className="uppercase tracking-[0.3em] text-[10px] font-bold opacity-40 mb-2">
+              {project.category}
+            </p>
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-8">
+              {project.title}
+            </h1>
+            <p className="text-xl opacity-70 max-w-2xl leading-relaxed">
+              {project.description}
+            </p>
           </motion.div>
 
           <div className="space-y-32">
             {(project.clayRender || project.clayVideo || project.wireframe) && (
               <div className={`grid ${project.wireframe && (project.clayRender || project.clayVideo) ? 'md:grid-cols-2' : 'grid-cols-1'} gap-10`}>
+
+                {/* Clay Render / Video */}
                 {(project.clayRender || project.clayVideo) && (
                   <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={anim}>
                     <p className="text-[10px] uppercase font-bold mb-4 opacity-30">
                       {project.clayVideo ? "Technical Clay Video" : "Technical Clay"}
                     </p>
                     {project.clayVideo ? (
-                      <video src={project.clayVideo} autoPlay loop muted playsInline className="rounded-2xl w-full shadow-lg" />
+                      <video
+                        src={project.clayVideo}
+                        autoPlay loop muted playsInline
+                        onClick={() => setFullscreenMedia({ type: "video", src: project.clayVideo })}
+                        className="rounded-2xl w-full shadow-lg cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+                      />
                     ) : (
-                      <img src={project.clayRender} className="rounded-2xl w-full shadow-lg" alt="Clay" />
+                      <img
+                        src={project.clayRender}
+                        alt="Clay"
+                        onClick={() => setFullscreenMedia({ type: "image", src: project.clayRender })}
+                        className="rounded-2xl w-full shadow-lg cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+                      />
                     )}
                   </motion.div>
                 )}
-                
+
+                {/* Wireframe */}
                 {project.wireframe && (
                   <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={anim} transition={{ delay: 0.2 }}>
                     <p className="text-[10px] uppercase font-bold mb-4 opacity-30">Technical Wireframe</p>
-                    <img src={project.wireframe} className="rounded-2xl w-full shadow-lg" alt="Wireframe" />
+                    <img
+                      src={project.wireframe}
+                      alt="Wireframe"
+                      onClick={() => setFullscreenMedia({ type: "image", src: project.wireframe })}
+                      className="rounded-2xl w-full shadow-lg cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+                    />
                   </motion.div>
                 )}
               </div>
             )}
 
+            {/* Final Renders */}
             {project.finalRenders && project.finalRenders.length > 0 && (
               <div className="space-y-16 mt-16">
                 {project.finalRenders.map((file, index) => {
                   const isVideo = file.match(/\.(mp4|webm|ogg|mov)$/i);
                   return (
-                    <motion.div 
-                      key={index} 
-                      initial="hidden" 
-                      whileInView="visible" 
-                      viewport={{ once: true, margin: "-100px" }} 
+                    <motion.div
+                      key={index}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, margin: "-100px" }}
                       variants={anim}
                     >
                       <h2 className="text-[10px] uppercase font-bold opacity-30 text-center mb-6 tracking-[0.3em]">
@@ -76,9 +131,19 @@ export default function ProjectPage() {
                       </h2>
                       <div className="w-full bg-black/5 rounded-[2rem] border border-black/5 shadow-inner overflow-hidden flex items-center justify-center">
                         {isVideo ? (
-                          <video src={file} autoPlay loop muted playsInline className="w-full h-auto object-cover max-h-[80vh]" />
+                          <video
+                            src={file}
+                            autoPlay loop muted playsInline
+                            onClick={() => setFullscreenMedia({ type: "video", src: file })}
+                            className="w-full h-auto object-cover max-h-[80vh] cursor-zoom-in transition-opacity hover:opacity-90"
+                          />
                         ) : (
-                          <img src={file} alt={`Final Render ${index + 1}`} className="w-full h-auto object-cover max-h-[80vh]" />
+                          <img
+                            src={file}
+                            alt={`Final Render ${index + 1}`}
+                            onClick={() => setFullscreenMedia({ type: "image", src: file })}
+                            className="w-full h-auto object-cover max-h-[80vh] cursor-zoom-in transition-opacity hover:opacity-90"
+                          />
                         )}
                       </div>
                     </motion.div>
@@ -86,18 +151,29 @@ export default function ProjectPage() {
                 })}
               </div>
             )}
-            
+
             {project.hasViewer && (
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={anim} className="mt-16">
                 <h2 className="text-[10px] uppercase font-bold opacity-30 text-center mb-8 tracking-[0.3em]">
                   Interactive 3D Preview
                 </h2>
-                <div className="h-[600px] w-full bg-neutral-50 rounded-[2rem] border border-black/5 shadow-inner overflow-hidden flex items-center justify-center">
+                <div className="h-[600px] w-full bg-neutral-50 rounded-[2rem] border border-black/5 shadow-inner overflow-hidden flex items-center justify-center cursor-move">
                   <ThreeDViewer modelPath={project.modelPath} />
                 </div>
               </motion.div>
             )}
           </div>
+
+          {/* --- BOTÓN BACK TO PORTFOLIO --- */}
+          <div className="mt-32 flex justify-center">
+            <Link
+              to="/portfolio"
+              className="px-12 py-5 border border-black/20 text-black rounded-full text-xs font-bold uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all duration-300 shadow-sm hover:shadow-xl"
+            >
+              Back to Portfolio
+            </Link>
+          </div>
+
         </div>
 
         {/* Suggestion Grid Navigation */}
