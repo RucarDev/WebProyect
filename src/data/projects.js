@@ -1,4 +1,4 @@
-// src/data/projects.js
+// Project data for the portfolio
 
 export const categories = [
   "Hard Surface",
@@ -29,7 +29,7 @@ export const projects = [
 
   {
     slug: "room-1",
-    title: "3D Room design",
+    title: "3D Room Design",
     category: "Diorama",
 
     cover: "/diorama/Habitacion01/HabitacionRender.webp",
@@ -48,7 +48,7 @@ export const projects = [
   },
   {
     slug: "room-2",
-    title: "3D Room design 2",
+    title: "3D Room Design 2",
     category: "Diorama",
 
     cover: "/diorama/Habitacion02/RenderTexturaHabitacion02.webp",
@@ -79,7 +79,7 @@ export const projects = [
     ],
 
     description:
-      "Ancient abandonated temple with old arquitecture.",
+      "Ancient abandoned temple with old architecture.",
   },
   {
     slug: "animations",
@@ -96,13 +96,13 @@ export const projects = [
 
 
     description:
-      "Body animated movements as standing up or playing with knifes.",
+      "Body animated movements such as standing up or playing with knives.",
 
 
   },
   {
     slug: "room-3",
-    title: "3D Room design 3",
+    title: "3D Room Design 3",
     category: "Diorama",
 
     cover: "/diorama/Habitacion03/RenderHabitacion03.png",
@@ -121,7 +121,7 @@ export const projects = [
   },
   {
     slug: "street-model",
-    title: "3D street enviroment",
+    title: "3D Street Environment",
     category: "Environment",
 
     cover: "/enviroments/Street/TrainCover.png",
@@ -135,7 +135,7 @@ export const projects = [
 
 
     description:
-      "3D design of a street enviroment.",
+      "3D design of a street environment.",
 
 
   },

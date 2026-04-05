@@ -1,5 +1,5 @@
 {
-  "name": "shcakes",
+  "name": "ruben-padilla-portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "@studio-freight/react-lenis": "^0.0.47",
@@ -17,8 +18,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.13.0",
-    "sharp": "^0.34.5",
-    "skia-canvas": "^3.0.8",
     "three": "^0.183.2"
   },
   "devDependencies": {

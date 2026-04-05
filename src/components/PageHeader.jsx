@@ -8,7 +8,7 @@ export default function PageHeader({ children, bottomContent, backgroundComponen
       ref={ref}
       className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-transparent"
     >
-      {/* Si hay un componente de fondo (como el logo) se verá a través de aquí */}
+      {/* Background component (e.g. 3D logo) renders behind the content */}
       {backgroundComponent && backgroundComponent}
 
       <div className="relative z-10 w-full px-8 md:px-16 text-white flex flex-col items-center">

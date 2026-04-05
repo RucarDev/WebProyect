@@ -23,29 +23,30 @@ export default function PortfolioPage() {
 
   return (
     <PageTransition>
-      {/* 1. CONTENEDOR RAIZ: Fondo negro puro para evitar destellos blancos */}
+      {/* Root container: pure black background to avoid white flashes */}
       <div className="relative w-full min-h-screen bg-black text-white overflow-hidden">
 
-        {/* 2. FONDO FIJO: El video y el overlay son una sola pieza que NO se mueve */}
+        {/* Fixed background: video and overlay stay in place */}
         <div className="fixed inset-0 z-0">
           <Suspense fallback={<div className="absolute inset-0 bg-black" />}>
             <PortfolioVideo />
           </Suspense>
 
-          {/* OVERLAY UNIFORME: Oscurece el video por igual en toda la pantalla para eliminar cortes */}
+          {/* Uniform overlay: darkens the video evenly */}
           <div className="absolute inset-0 bg-black/50" />
         </div>
 
-        {/* 3. CONTENIDO SCROLLEABLE */}
+        {/* Scrollable content */}
         <div className="relative z-10">
 
-          {/* HEADER TRANSPARENTE: Asegúrate que PageHeader.jsx no tenga "bg-black" o similares */}
+          {/* Transparent header */}
           <PageHeader
             className="bg-transparent shadow-none border-none"
             bottomContent={
               <button
                 onClick={scrollToGrid}
                 className="animate-bounce w-14 h-14 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-500"
+                aria-label="Scroll to projects"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 5v14M19 12l-7 7-7-7" />
@@ -53,24 +54,24 @@ export default function PortfolioPage() {
               </button>
             }
           >
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
               PORTFOLIO
             </h1>
-            <p className="mt-6 text-[11px] md:text-xs text-white/60 tracking-[0.25em] max-w-2xl leading-loose uppercase">
+            <p className="mt-4 md:mt-6 text-[11px] md:text-xs text-white/60 tracking-[0.25em] max-w-2xl leading-loose uppercase">
               A curated selection of projects including hard surface, environments, animation and tracking.
             </p>
           </PageHeader>
 
-          {/* GRID DE PROYECTOS: Sin fondos adicionales para que el video fluya */}
-          <section id="projects-grid" className="w-full px-8 md:px-16 py-32 bg-transparent">
+          {/* Projects grid */}
+          <section id="projects-grid" className="w-full px-6 md:px-16 py-20 md:py-32 bg-transparent">
 
-            {/* TABS */}
-            <div className="flex flex-wrap gap-2 mb-24 justify-center bg-white/5 p-1.5 rounded-full border border-white/10 mx-auto w-fit backdrop-blur-md">
+            {/* Category filter tabs — horizontal scroll on mobile */}
+            <div className="flex gap-2 mb-16 md:mb-24 justify-start md:justify-center overflow-x-auto pb-2 md:pb-0 no-scrollbar bg-white/5 p-1.5 rounded-full border border-white/10 mx-auto w-fit max-w-full backdrop-blur-md">
               {uniqueCategories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setActiveTab(cat)}
-                  className="relative px-6 py-2.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] transition-colors z-10"
+                  className="relative px-5 md:px-6 py-2.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] transition-colors z-10 whitespace-nowrap flex-shrink-0"
                 >
                   <span className={`relative z-20 transition-colors duration-300 ${activeTab === cat ? 'text-black' : 'text-white/50 hover:text-white'}`}>
                     {cat}
@@ -86,10 +87,10 @@ export default function PortfolioPage() {
               ))}
             </div>
 
-            {/* GRID */}
+            {/* Grid */}
             <motion.div
               key={activeTab}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-10 gap-y-12 md:gap-y-20"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}

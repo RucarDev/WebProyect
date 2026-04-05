@@ -1,4 +1,4 @@
-/* Esto activa el "motor" de imán del navegador para que Lenis lo use */
+/* Enable the browser's snap engine for Lenis to use */
 html {
   scroll-snap-type: y mandatory;
 }
@@ -8,7 +8,7 @@ html {
   scroll-snap-stop: always;
 }
 
-/* Ocultamos la barra para que el efecto sea total */
+/* Hide scrollbar for a seamless experience */
 ::-webkit-scrollbar {
   display: none;
 }

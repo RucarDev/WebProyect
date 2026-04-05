@@ -8,10 +8,10 @@ export default function Hero() {
     const target = document.getElementById("portfolio-preview");
     if (!target || !lenis) return;
 
-    // Dejamos que Lenis maneje el scroll para no romper el fondo 3D
+    // Let Lenis handle the scroll to preserve the 3D background
     lenis.scrollTo(target, {
       duration: 1.5,
-      easing: (t) => 1 - Math.pow(1 - t, 3) // Tu "Cubic Out" original
+      easing: (t) => 1 - Math.pow(1 - t, 3) // Cubic Out easing
     });
   };
 
@@ -19,7 +19,7 @@ export default function Hero() {
     <PageHeader>
       <div className="relative w-full h-[90vh] md:h-screen flex flex-col justify-center">
 
-        {/* Título, Descripción y Botón (Mantiene tu formato original) */}
+        {/* Title, description and CTA */}
         <div>
           <h1 className="-ml-2 text-6xl md:text-9xl font-extrabold tracking-tighter leading-[0.85]">
             <span className="block">RUBEN</span>
@@ -40,13 +40,12 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Créditos: Forzados a romper el contenedor y ocupar toda la pantalla */}
-        {/* Créditos: Ajusta los valores de text-[px] según prefieras */}
+        {/* Credits bar — spans full width at the bottom */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-full md:w-screen px-6 md:px-12 flex flex-row justify-between items-center text-[7px] md:text-[8px] lg:text-[10px] text-white tracking-[0.2em] uppercase whitespace-nowrap opacity-90">
           <span>Visuals: <span className="font-semibold text-white">Ruben Padilla</span></span>
           <span>Dev: <span className="font-semibold text-white">Carlos Padilla</span></span>
-          <span>Location: <span className="font-semibold text-white">Jaén</span></span>
-          <span>Typology: <span className="font-semibold text-white">Graphic Design & 3D</span></span>
+          <span className="hidden sm:inline">Location: <span className="font-semibold text-white">Jaén</span></span>
+          <span className="hidden sm:inline">Typology: <span className="font-semibold text-white">Graphic Design & 3D</span></span>
         </div>
 
       </div>

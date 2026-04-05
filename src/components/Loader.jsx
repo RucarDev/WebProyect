@@ -9,11 +9,11 @@ export default function Loader({ onFinished }) {
             setProgress((prev) => {
                 if (prev >= 100) {
                     clearInterval(interval);
-                    // Reducimos el delay al mínimo (200ms) para que el salto al Home sea casi inmediato
+                    // Minimal delay (200ms) so the transition to Home is nearly instant
                     setTimeout(() => onFinished(), 200);
                     return 100;
                 }
-                // Saltos más grandes (de 2 a 6) para que llegue al 100% en menos de 1 segundo
+                // Larger increments (2 to 6) to reach 100% in under 1 second
                 const next = prev + Math.floor(Math.random() * 5) + 2;
                 return next > 100 ? 100 : next;
             });

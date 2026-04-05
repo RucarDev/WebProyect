@@ -21,13 +21,13 @@ const fadeInUp = {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Tomamos los primeros 5 proyectos para el carrusel circular
+  // First 5 projects for the circular carousel
   const carouselProjects = projects.slice(0, 5);
 
   const lenis = useLenis();
   const isScrolling = useRef(false);
 
-  // --- PREVENIR SCROLL FANTASMA DEL NAVEGADOR ---
+  // --- PREVENT GHOST SCROLL FROM BROWSER ---
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -35,13 +35,21 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
-  // --- MOTOR DE SALTO DE SECCIÓN ---
+  // --- SECTION SNAP SCROLL ENGINE (desktop only) ---
   useEffect(() => {
     if (!lenis || isLoading) return;
 
     lenis.scrollTo(0, { immediate: true });
 
+    // Detect touch device to disable snap scrolling on mobile
+    const isTouchDevice = () => {
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    };
+
     const handleWheel = (e) => {
+      // Skip snap scrolling on touch devices
+      if (isTouchDevice()) return;
+
       if (isScrolling.current) {
         e.preventDefault();
         return;
@@ -100,17 +108,17 @@ export default function Home() {
               <Hero />
             </div>
 
-            {/* 2. SELECTED WORK (ALINEADO A LA IZQUIERDA) */}
-            <section id="portfolio-preview" className="snap-section relative w-full py-32 px-0 min-h-screen flex flex-col justify-center overflow-hidden">
+            {/* 2. SELECTED WORK (left-aligned) */}
+            <section id="portfolio-preview" className="snap-section relative w-full py-10 md:py-16 px-0 min-h-screen flex flex-col justify-center overflow-hidden">
               <div className="w-full relative z-10">
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, amount: 0.3 }}
                   variants={fadeInUp}
-                  className="mb-8 md:mb-16 flex flex-col items-start text-left px-8 md:px-16 w-full max-w-7xl mx-auto"
+                  className="mb-2 md:mb-6 flex flex-col items-start text-left px-6 md:px-16 w-full max-w-7xl mx-auto"
                 >
-                  <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 uppercase text-white">
+                  <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter mb-4 uppercase text-white">
                     Selected Work
                   </h2>
                   <p className="text-white/60 max-w-2xl uppercase text-[11px] tracking-[0.25em]">
@@ -124,19 +132,19 @@ export default function Home() {
               </div>
             </section>
 
-            {/* 3. HOW I WORK - FASE 1 (NUEVA SECCIÓN INDEPENDIENTE) */}
-            <section className="snap-section relative w-full py-20 min-h-screen flex flex-col justify-center items-center overflow-hidden">
-              <div className="w-full relative z-10 max-w-[90rem] mx-auto px-8 md:px-16">
+            {/* 3. HOW I WORK — Phase 1 */}
+            <section className="snap-section relative w-full py-12 md:py-20 min-h-screen flex flex-col justify-center items-center overflow-hidden">
+              <div className="w-full relative z-10 max-w-[90rem] mx-auto px-6 md:px-16">
 
-                {/* Cabecera de la sección - Alineada a la derecha */}
+                {/* Section header — right-aligned */}
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, amount: 0.3 }}
                   variants={fadeInUp}
-                  className="mb-12 md:mb-20 flex flex-col items-end text-right w-full"
+                  className="mb-8 md:mb-20 flex flex-col items-end text-right w-full"
                 >
-                  <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 uppercase text-white">
+                  <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter mb-4 uppercase text-white">
                     How I Work
                   </h2>
                   <p className="text-white/60 max-w-2xl uppercase text-[11px] tracking-[0.25em]">
@@ -144,8 +152,8 @@ export default function Home() {
                   </p>
                 </motion.div>
 
-                {/* Fila 1: Vídeo a la izquierda (Gigante), Texto a la derecha */}
-                <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 w-full">
+                {/* Row 1: Video left (large), Text right */}
+                <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-20 w-full">
                   <motion.div
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -153,7 +161,7 @@ export default function Home() {
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                     className="w-full lg:w-[60%] relative group rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-sm aspect-video shadow-2xl shrink-0"
                   >
-                    <div className="absolute top-4 left-4 z-20 px-5 py-2 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                    <div className="absolute top-3 left-3 md:top-4 md:left-4 z-20 px-4 md:px-5 py-1.5 md:py-2 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                       Phase 01
                     </div>
                     <video
@@ -173,10 +181,10 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     className="w-full lg:w-[40%] flex flex-col items-start text-left"
                   >
-                    <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-widest text-white mb-6">
+                    <h3 className="text-2xl md:text-4xl font-bold uppercase tracking-widest text-white mb-4 md:mb-6">
                       3D Modeling
                     </h3>
-                    <p className="text-white/50 text-base md:text-lg leading-relaxed uppercase text-[11px] tracking-widest">
+                    <p className="text-white/50 text-xs md:text-base leading-relaxed uppercase tracking-widest">
                       Every great project starts with a solid foundation. In this phase, raw geometry is sculpted into form. Careful attention to topology and edge flow ensures the model is perfectly optimized for the stages to come.
                     </p>
                   </motion.div>
@@ -184,12 +192,12 @@ export default function Home() {
               </div>
             </section>
 
-            {/* 4. HOW I WORK - FASE 2 (NUEVA SECCIÓN INDEPENDIENTE) */}
-            <section className="snap-section relative w-full py-20 min-h-screen flex flex-col justify-center items-center overflow-hidden">
-              <div className="w-full relative z-10 max-w-[90rem] mx-auto px-8 md:px-16">
+            {/* 4. HOW I WORK — Phase 2 */}
+            <section className="snap-section relative w-full py-12 md:py-20 min-h-screen flex flex-col justify-center items-center overflow-hidden">
+              <div className="w-full relative z-10 max-w-[90rem] mx-auto px-6 md:px-16">
 
-                {/* Fila 2: Texto a la izquierda, Vídeo a la derecha (Gigante) */}
-                <div className="flex flex-col lg:flex-row-reverse items-center gap-10 lg:gap-20 w-full">
+                {/* Row 2: Text left, Video right (large) */}
+                <div className="flex flex-col lg:flex-row-reverse items-center gap-6 lg:gap-20 w-full">
                   <motion.div
                     initial={{ opacity: 0, x: 30 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -197,7 +205,7 @@ export default function Home() {
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                     className="w-full lg:w-[60%] relative group rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-sm aspect-video shadow-2xl shrink-0"
                   >
-                    <div className="absolute top-4 left-4 z-20 px-5 py-2 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                    <div className="absolute top-3 left-3 md:top-4 md:left-4 z-20 px-4 md:px-5 py-1.5 md:py-2 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                       Phase 02
                     </div>
                     <video
@@ -217,10 +225,10 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     className="w-full lg:w-[40%] flex flex-col items-start lg:items-end text-left lg:text-right"
                   >
-                    <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-widest text-white mb-6">
+                    <h3 className="text-2xl md:text-4xl font-bold uppercase tracking-widest text-white mb-4 md:mb-6">
                       Animation
                     </h3>
-                    <p className="text-white/50 text-base md:text-lg leading-relaxed uppercase text-[11px] tracking-widest">
+                    <p className="text-white/50 text-xs md:text-base leading-relaxed uppercase tracking-widest">
                       Breathing life into static pixels. Through physics simulations, precise keyframing, and dynamic camera movements, the scene is transformed into an immersive and captivating visual experience.
                     </p>
                   </motion.div>
@@ -229,12 +237,12 @@ export default function Home() {
               </div>
             </section>
 
-            {/* 5. BOTÓN FINAL */}
-            <div className="snap-section w-full h-[60vh] flex flex-col justify-end items-center pb-24">
+            {/* 5. FINAL CTA BUTTON */}
+            <div className="snap-section w-full h-[50vh] md:h-[60vh] flex flex-col justify-end items-center pb-16 md:pb-24">
               <Magnetic>
                 <Link
                   to="/portfolio"
-                  className="px-12 py-5 border border-white/40 text-white rounded-full text-xs font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all bg-white/5 backdrop-blur-md"
+                  className="px-10 md:px-12 py-4 md:py-5 border border-white/40 text-white rounded-full text-xs font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all bg-white/5 backdrop-blur-md"
                 >
                   View Full Portfolio
                 </Link>

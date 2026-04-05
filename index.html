@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="es" translate="no">
+<html lang="en" translate="no">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/logo/LetteringR.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,7 +20,9 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <!-- Skip to main content link for accessibility (Suggestion #7) -->
+  <a href="#root" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded">Skip to content</a>
+  <div id="root" role="main"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

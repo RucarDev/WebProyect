@@ -3,13 +3,13 @@ import { OrbitControls, Stage, useGLTF } from "@react-three/drei";
 import { Suspense } from "react";
 
 function Model({ url }) {
-  // useGLTF fallará si la URL es mala, por eso necesitamos el Suspense en el padre
+  // useGLTF will throw if the URL is invalid — Suspense in the parent handles this
   const { scene } = useGLTF(url);
   return <primitive object={scene} />;
 }
 
 export default function ThreeDViewer({ modelPath }) {
-  // Si no hay ruta, no renderizamos nada para evitar el pantallazo blanco
+  // If no path is provided, render nothing to avoid a blank white screen
   if (!modelPath) return null;
 
   return (

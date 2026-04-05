@@ -7,21 +7,21 @@ function LogoModel() {
   const { scene } = useGLTF("/logo/LogoRWeb_Fondo.glb");
   const modelRef = useRef();
 
-  // Chrome iridiscente: oscuro + espejo + arcoíris azul/morado/rosa
-  // Sin transmission → rendimiento comparable a MeshStandardMaterial
+  // Iridescent chrome: dark base + mirror finish + blue/purple/pink rainbow
+  // No transmission → performance comparable to MeshStandardMaterial
   const chromeMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color("#050510"),        // base casi negra
+    color: new THREE.Color("#050510"),        // near-black base
     metalness: 1.0,
-    roughness: 0.04,                          // casi espejo
+    roughness: 0.04,                          // near-mirror finish
     reflectivity: 1.0,
     envMapIntensity: 2.5,
 
-    // Iridiscencia: crea los destellos azul/morado/rosa como en la imagen
+    // Iridescence: creates blue/purple/pink highlights
     iridescence: 1.0,
     iridescenceIOR: 1.8,
-    iridescenceThicknessRange: [200, 600],    // rango que da azul↔morado↔rosa
+    iridescenceThicknessRange: [200, 600],    // range for blue↔purple↔pink
 
-    // Brillo emissivo suave (azul-morado)
+    // Subtle emissive glow (blue-purple)
     emissive: new THREE.Color("#2a0a5a"),
     emissiveIntensity: 0.2,
 
@@ -48,52 +48,50 @@ function LogoModel() {
     const scrollProgress = Math.min(scrollY / (documentHeight - vh), 1);
     const time = state.clock.getElapsedTime();
 
-    // Pulso emissivo
+    // Emissive pulse
     const pulse = (Math.sin(time * 0.9) + 1) / 2;
     chromeMaterial.emissiveIntensity = 0.15 + pulse * 0.2;
 
-    // --- 1. CALCULAMOS LAS POSICIONES OBJETIVO ---
+    // --- 1. CALCULATE TARGET POSITIONS ---
     let targetX, targetY, targetScale;
 
     if (scrollProgress < 0.42) {
-      // --- FASE 1: ENTRADA (0% a 42%) ---
+      // --- PHASE 1: ENTRANCE (0% to 42%) ---
       const p1 = scrollProgress / 0.42;
       targetX = 3.5 - (p1 * 3.5);     // 3.5 -> 0
       targetY = 4.0 - (p1 * 2.5);     // 4.0 -> 1.5
       targetScale = 6.5 - (p1 * 1.5); // 6.5 -> 5.0
 
     } else if (scrollProgress < 0.52) {
-      // --- FASE 2: DESPLAZAMIENTO (42% a 55%) ---
+      // --- PHASE 2: DISPLACEMENT (42% to 52%) ---
       const p2 = (scrollProgress - 0.42) / 0.10;
-      targetX = 0 - (p2 * 5.5);       // 0 -> -5.5 (Ajustado a tu valor original)
+      targetX = 0 - (p2 * 5.5);       // 0 -> -5.5
       targetY = 1.5 - (p2 * 1.4);     // 1.5 -> 1.0
       targetScale = 5.0 - (p2 * 1.0); // 5.0 -> 4.0
 
     } else if (scrollProgress < 0.80) {
-      // --- FASE EXTRA: PAUSA (55% a 80%) ---
-      targetX = -5.5;                 // Congelado en -5.5
-      targetY = 0.1;                  // Congelado en 1.0
-      targetScale = 4.0;              // Congelado en 4.0
+      // --- PHASE 3: HOLD (52% to 80%) ---
+      targetX = -5.5;                 // Frozen at -5.5
+      targetY = 0.1;                  // Frozen at 0.1
+      targetScale = 4.0;              // Frozen at 4.0
 
     } else {
-      // --- FASE 3: REGRESO (80% a 100%) ---
+      // --- PHASE 4: RETURN (80% to 100%) ---
       const p3 = (scrollProgress - 0.80) / 0.20;
       targetX = -5.5 + (p3 * 5.5);    // -5.5 -> 0
-      targetY = 0.1;                  // Se mantiene en 1.0
-      targetScale = 4.0 - (p3 * 1.5); // 4.0 -> 2.3
+      targetY = 0.3;                  // Stays at 0.1
+      targetScale = 4.0 - (p3 * 1.8); // 4.0 -> 2.5
     }
 
-    // --- 2. APLICAMOS 'LERP' PARA UN MOVIMIENTO FLUIDO (EL SECRETO) ---
-    // El 0.08 es la velocidad de suavizado. Ajusta este número si lo quieres más rápido (0.15) o más lento (0.05)
+    // --- 2. APPLY LERP FOR SMOOTH MOVEMENT ---
     modelRef.current.position.x = THREE.MathUtils.lerp(modelRef.current.position.x, targetX, 0.1);
     modelRef.current.position.y = THREE.MathUtils.lerp(modelRef.current.position.y, targetY, 0.1);
 
-    // Para la escala usamos el valor actual en X como referencia
     const currentScale = modelRef.current.scale.x;
     const lerpedScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.1);
     modelRef.current.scale.setScalar(lerpedScale);
 
-    // Rotación suave
+    // Smooth rotation — showcases iridescent reflections
     modelRef.current.rotation.y = -Math.PI / 2 + time * 0.2 + scrollProgress * 2;
   });
 
@@ -102,7 +100,7 @@ function LogoModel() {
 
 export default function Hero3DBackground() {
   return (
-    // position: fixed, z-[0] y el bg oscuro para ser la base de toda la web
+    // Fixed position, z-[0] and dark bg as the base layer for the entire site
     <div className="fixed top-0 left-0 w-full h-full z-[0] pointer-events-none bg-[#020202]">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 45 }}
@@ -115,16 +113,16 @@ export default function Hero3DBackground() {
         }}
       >
         <Suspense fallback={null}>
-          {/* Entorno imprescindible para que el chrome iridiscente refleje */}
+          {/* Environment map required for iridescent chrome reflections */}
           <Environment preset="night" />
 
-          {/* Luz fría azulada desde arriba */}
+          {/* Cool blue directional light from above */}
           <directionalLight position={[3, 8, 5]} intensity={3} color="#a0c0ff" />
 
-          {/* Relleno morado desde abajo */}
+          {/* Purple fill light from below */}
           <pointLight position={[-4, -4, 3]} color="#7b2fff" intensity={20} distance={25} />
 
-          {/* Acento rosa-magenta desde la derecha */}
+          {/* Pink-magenta accent from the right */}
           <pointLight position={[6, 1, 4]} color="#c026d3" intensity={15} distance={22} />
 
           <LogoModel />

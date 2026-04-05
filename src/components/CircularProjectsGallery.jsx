@@ -3,8 +3,8 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 
 export default function CircularProjectsGallery({ projects }) {
-    // Nuestro valor maestro que controla la rotación. Ya no tiene un "spring" 
-    // constante para que la interacción manual sea 1:1 con el ratón.
+    // Master motion value that controls the rotation.
+    // No constant spring so manual interaction is 1:1 with the mouse.
     const dragX = useMotionValue(0);
 
     const [gap, setGap] = useState(350);
@@ -27,12 +27,12 @@ export default function CircularProjectsGallery({ projects }) {
 
     const totalWidth = projects.length * gap;
 
-    // 1. Escuchamos el arrastre SIN mover el contenedor principal
+    // 1. Listen to pan gestures WITHOUT moving the main container
     const handlePan = (e, info) => {
         dragX.set(dragX.get() + info.delta.x);
     };
 
-    // 2. Al soltar, aplicamos un "momentum" (inercia) para que el giro se sienta natural
+    // 2. On release, apply momentum (inertia) for a natural feel
     const handlePanEnd = (e, info) => {
         const velocity = info.velocity.x;
         animate(dragX, dragX.get() + velocity * 0.2, {
@@ -44,9 +44,9 @@ export default function CircularProjectsGallery({ projects }) {
     };
 
     return (
-        <div className="relative w-full h-[500px] md:h-[650px] flex items-center justify-center overflow-hidden">
+        <div className="relative w-full h-[400px] md:h-[550px] flex items-center justify-center overflow-hidden">
 
-            {/* Contenedor Fijo: Usamos onPan en vez de drag="x" para que no salga volando de la pantalla */}
+            {/* Fixed container: uses onPan instead of drag="x" to prevent flying off screen */}
             <motion.div
                 onPan={handlePan}
                 onPanEnd={handlePanEnd}
@@ -55,14 +55,14 @@ export default function CircularProjectsGallery({ projects }) {
                 {projects.map((project, index) => {
                     const baseX = index * gap;
 
-                    // Bucle infinito perfecto
+                    // Perfect infinite loop
                     const xPos = useTransform(dragX, (latestX) => {
                         const pos = baseX + latestX;
                         const half = totalWidth / 2;
                         return ((pos + half) % totalWidth + totalWidth) % totalWidth - half;
                     });
 
-                    // RADIO GIGANTE (CURVA PLANA)
+                    // Large radius (flat curve)
                     const y = useTransform(
                         xPos,
                         [-gap * 2, -gap, 0, gap, gap * 2],
@@ -96,7 +96,7 @@ export default function CircularProjectsGallery({ projects }) {
                     return (
                         <motion.div
                             key={project.slug}
-                            className="absolute origin-bottom select-none" // select-none previene bugs visuales al arrastrar
+                            className="absolute origin-bottom select-none" // select-none prevents visual bugs while dragging
                             style={{
                                 width: cardWidth,
                                 marginLeft: -cardWidth / 2,
@@ -108,7 +108,7 @@ export default function CircularProjectsGallery({ projects }) {
                                 zIndex
                             }}
                         >
-                            {/* Desactivamos el arrastre de imágenes fantasma nativo del navegador */}
+                            {/* Disable native browser ghost-image dragging */}
                             <div className="w-full pointer-events-auto shadow-2xl" draggable="false">
                                 <ProjectCard project={project} />
                             </div>

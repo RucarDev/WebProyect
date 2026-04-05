@@ -5,12 +5,12 @@ export default function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Usamos un timeout mínimo para asegurar que el DOM de la nueva página ya existe
+    // Minimal timeout to ensure the new page's DOM is rendered
     const timer = setTimeout(() => {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: "instant" // "instant" es clave para evitar saltos visuales raros
+        behavior: "instant" // "instant" is key to avoid visual jump glitches
       });
     }, 0);
 

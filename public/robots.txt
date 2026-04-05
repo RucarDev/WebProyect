@@ -1,0 +1,10 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location — update domain when deploying
+Sitemap: https://rubenpadilla.com/sitemap.xml
+
+# Block crawling of internal assets
+Disallow: /models/
+Disallow: /logo/

@@ -11,13 +11,13 @@ function LogoModel({ isHovered, isDark }) {
   useEffect(() => {
     scene.traverse((child) => {
       if (child.isMesh) {
-        // REEMPLAZO TOTAL DE MATERIAL:
-        // Si es Dark (fondo blanco), forzamos un material mate negro puro
-        // Si no, volvemos al blanco brillante
+        // Full material replacement:
+        // Dark mode (white background) → matte black material
+        // Light mode → glossy white material
         child.material = new THREE.MeshStandardMaterial({
           color: isDark ? "#000000" : "#ffffff",
-          roughness: isDark ? 1 : 0.5, // Totalmente mate en negro para que no brille gris
-          metalness: isDark ? 0 : 0.5, // Sin metalizado en negro
+          roughness: isDark ? 1 : 0.5, // Fully matte in dark mode to avoid grey shine
+          metalness: isDark ? 0 : 0.5, // No metalness in dark mode
         });
         child.material.needsUpdate = true;
       }
@@ -48,18 +48,18 @@ function LogoModel({ isHovered, isDark }) {
 export default function Nav3DLogo({ isHovered, isDark }) {
   return (
     <div className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center pointer-events-none">
-      {/* Usar isDark en la key evita que el logo desaparezca al refrescar el contexto */}
+      {/* Using isDark in the key prevents the logo from disappearing on context refresh */}
       <Canvas
         key={isDark ? "dark-canvas" : "light-canvas"}
         camera={{ position: [0, 0, 6.5], fov: 40 }}
         gl={{ antialias: true, alpha: true }}
       >
         <Suspense fallback={null}>
-          {/* Si es dark, bajamos la intensidad de la luz ambiente para que sea negro real */}
+          {/* Lower ambient light in dark mode for true black appearance */}
           <ambientLight intensity={isDark ? 0.2 : 1.5} />
           <pointLight position={[10, 10, 10]} intensity={isDark ? 1.5 : 2} />
 
-          {/* Quitamos el Environment en modo dark para evitar reflejos grises del cielo/ciudad */}
+          {/* Remove Environment in dark mode to avoid grey sky/city reflections */}
           {!isDark && <Environment preset="city" />}
 
           <LogoModel isHovered={isHovered} isDark={isDark} />
