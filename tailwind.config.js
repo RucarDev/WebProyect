@@ -11,6 +11,11 @@ export default {
         primary: "#111111",     // elegant black
         accent: "#d6c4b2",      // warm beige
       },
+      keyframes: {
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        }
+      },
     },
   },
   plugins: [],

@@ -5,6 +5,8 @@ import { ReactLenis } from "@studio-freight/react-lenis";
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
+import { HelmetProvider } from "react-helmet-async";
+import { Analytics } from "@vercel/analytics/react";
 
 // Code-split pages for smaller initial bundle (Suggestion #6)
 const Home = lazy(() => import("./pages/Home"));
@@ -18,8 +20,9 @@ function App() {
   const location = useLocation();
 
   return (
-    // Smooth scroll wrapper with Lenis
-    <ReactLenis root options={{
+    <HelmetProvider>
+      {/* Smooth scroll wrapper with Lenis */}
+      <ReactLenis root options={{
       lerp: 0.05, // Lower value for cleaner snap transitions
       duration: 1.5,
       smoothTouch: true,
@@ -55,7 +58,9 @@ function App() {
 
         <Footer />
       </div>
+      <Analytics />
     </ReactLenis>
+    </HelmetProvider>
   );
 }
 

@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import PageTransition from "../components/PageTransition";
 
 // ============================================================
@@ -9,16 +12,26 @@ const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";     // e.g. "service_abc123"
 const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";   // e.g. "template_xyz789"
 const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";       // e.g. "aBcDeFgHiJkLmN"
 
+const contactSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email({ message: "Invalid email address" }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters" }),
+});
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle"); // "idle" | "sending" | "success" | "error"
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid, touchedFields },
+  } = useForm({
+    resolver: zodResolver(contactSchema),
+    mode: "onChange",
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setStatus("sending");
 
     try {
@@ -29,19 +42,25 @@ export default function ContactPage() {
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
+          from_name: data.name,
+          from_email: data.email,
+          message: data.message,
         },
         EMAILJS_PUBLIC_KEY
       );
 
       setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+      reset();
     } catch (error) {
       console.error("EmailJS error:", error);
       setStatus("error");
     }
+  };
+
+  const getBorderColor = (fieldName) => {
+    if (errors[fieldName]) return "border-red-500/50 focus:ring-red-500/50";
+    if (touchedFields[fieldName] && !errors[fieldName]) return "border-green-500/50 focus:ring-green-500/50";
+    return "border-gray-500/0 focus:ring-gray-700/100";
   };
 
   return (
@@ -55,47 +74,43 @@ export default function ContactPage() {
           I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
         </p>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto space-y-5 md:space-y-6 text-left">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xl mx-auto space-y-5 md:space-y-6 text-left">
           <div>
             <label className="block text-[10px] uppercase font-bold tracking-[0.2em] opacity-40 mb-2">Name</label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full bg-gray-500/10 backdrop-blur-md border border-gray-500/0 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-gray-700/100 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base"
+              {...register("name")}
+              className={`w-full bg-gray-500/10 backdrop-blur-md border rounded-xl px-5 md:px-6 py-3.5 md:py-4 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base focus:ring-2 ${getBorderColor("name")}`}
               placeholder="Your name"
             />
+            {errors.name && <p className="text-red-500 text-xs mt-2 font-medium">{errors.name.message}</p>}
           </div>
+
           <div>
             <label className="block text-[10px] uppercase font-bold tracking-[0.2em] opacity-40 mb-2">Email</label>
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full bg-gray-500/10 backdrop-blur-md border border-gray-500/0 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-gray-700/100 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base"
+              {...register("email")}
+              className={`w-full bg-gray-500/10 backdrop-blur-md border rounded-xl px-5 md:px-6 py-3.5 md:py-4 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base focus:ring-2 ${getBorderColor("email")}`}
               placeholder="Your email address"
             />
+            {errors.email && <p className="text-red-500 text-xs mt-2 font-medium">{errors.email.message}</p>}
           </div>
+
           <div>
             <label className="block text-[10px] uppercase font-bold tracking-[0.2em] opacity-40 mb-2">Message</label>
             <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
+              {...register("message")}
               rows="4"
-              className="w-full bg-gray-500/10 backdrop-blur-md border border-gray-500/0 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-gray-700/100 outline-none transition-all resize-none placeholder:text-black/50 text-black text-sm md:text-base"
+              className={`w-full bg-gray-500/10 backdrop-blur-md border rounded-xl px-5 md:px-6 py-3.5 md:py-4 outline-none transition-all resize-none placeholder:text-black/50 text-black text-sm md:text-base focus:ring-2 ${getBorderColor("message")}`}
               placeholder="Tell me about your project..."
             ></textarea>
+            {errors.message && <p className="text-red-500 text-xs mt-2 font-medium">{errors.message.message}</p>}
           </div>
 
           <button
             type="submit"
-            disabled={status === "sending"}
+            disabled={status === "sending" || !isValid}
             className="w-full bg-black text-white font-bold uppercase tracking-[0.2em] text-xs py-4 md:py-5 rounded-xl hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === "sending" ? "Sending..." : "Send Message"}
@@ -103,12 +118,12 @@ export default function ContactPage() {
 
           {/* Status feedback messages */}
           {status === "success" && (
-            <p className="text-center text-green-400 text-sm font-medium mt-4">
+            <p className="text-center text-green-600 text-sm font-medium mt-4">
               ✓ Message sent successfully! I'll get back to you soon.
             </p>
           )}
           {status === "error" && (
-            <p className="text-center text-red-400 text-sm font-medium mt-4">
+            <p className="text-center text-red-600 text-sm font-medium mt-4">
               ✕ Failed to send message. Please try again or email directly.
             </p>
           )}

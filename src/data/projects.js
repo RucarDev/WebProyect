@@ -12,7 +12,7 @@ export const projects = [
     slug: "up-house",
     title: "Environment UP HOUSE",
     category: "Environment",
-
+    technologies: ["Maya", "Arnold", "Nuke"],
     cover: "/enviroments/CasaUp/RenderUp10MB.webp",
 
     finalRenders: [
@@ -31,7 +31,7 @@ export const projects = [
     slug: "room-1",
     title: "3D Room Design",
     category: "Diorama",
-
+    technologies: ["Blender", "Substance Painter"],
     cover: "/diorama/Habitacion01/HabitacionRender.webp",
 
     finalRenders: [
@@ -50,7 +50,7 @@ export const projects = [
     slug: "room-2",
     title: "3D Room Design 2",
     category: "Diorama",
-
+    technologies: ["Blender", "Substance Painter"],
     cover: "/diorama/Habitacion02/RenderTexturaHabitacion02.webp",
 
     finalRenders: [
@@ -69,7 +69,7 @@ export const projects = [
     slug: "temple",
     title: "Ancient Temple",
     category: "Environment",
-
+    technologies: ["Unreal Engine 5", "ZBrush", "Megascans"],
     cover: "/enviroments/templo/RenderTemplo4K.webp",
 
     finalRenders: [
@@ -85,7 +85,7 @@ export const projects = [
     slug: "animations",
     title: "Body Movements Animations",
     category: "Animations",
-
+    technologies: ["Maya", "Motion Builder"],
     cover: "/animation/animationCover.webp",
 
     finalRenders: [
@@ -104,7 +104,7 @@ export const projects = [
     slug: "room-3",
     title: "3D Room Design 3",
     category: "Diorama",
-
+    technologies: ["Blender", "Substance Painter", "Photoshop"],
     cover: "/diorama/Habitacion03/RenderHabitacion03.png",
 
     finalRenders: [
@@ -123,7 +123,7 @@ export const projects = [
     slug: "street-model",
     title: "3D Street Environment",
     category: "Environment",
-
+    technologies: ["Maya", "Substance Designer", "Arnold"],
     cover: "/enviroments/Street/TrainCover.png",
 
     finalRenders: [
