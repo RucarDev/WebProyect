@@ -2,8 +2,8 @@ import fs from 'fs';
 import Path from 'path';
 import sharp from 'sharp';
 
-const PUBLIC_DIR = "c:/Users/Usuario/Desktop/WEB/WebProyect/public";
-const PROJECTS_JS = "c:/Users/Usuario/Desktop/WEB/WebProyect/src/data/projects.js";
+const PUBLIC_DIR = Path.join(process.cwd(), 'public');
+const PROJECTS_JS = Path.join(process.cwd(), 'src/data/projects.js');
 
 async function optimize() {
   let content = fs.readFileSync(PROJECTS_JS, 'utf-8');
