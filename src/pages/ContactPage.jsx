@@ -64,7 +64,7 @@ export default function ContactPage() {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full bg-white/40 backdrop-blur-md border border-gray-500/50 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-white/50 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base"
+              className="w-full bg-gray-500/10 backdrop-blur-md border border-gray-500/0 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-gray-700/100 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base"
               placeholder="Your name"
             />
           </div>
@@ -76,7 +76,7 @@ export default function ContactPage() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full bg-white/40 backdrop-blur-md border border-gray-500/50 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-white/50 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base"
+              className="w-full bg-gray-500/10 backdrop-blur-md border border-gray-500/0 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-gray-700/100 outline-none transition-all placeholder:text-black/50 text-black text-sm md:text-base"
               placeholder="Your email address"
             />
           </div>
@@ -88,7 +88,7 @@ export default function ContactPage() {
               onChange={handleChange}
               required
               rows="4"
-              className="w-full bg-white/40 backdrop-blur-md border border-gray-500/50 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-white/50 outline-none transition-all resize-none placeholder:text-black/50 text-black text-sm md:text-base"
+              className="w-full bg-gray-500/10 backdrop-blur-md border border-gray-500/0 rounded-xl px-5 md:px-6 py-3.5 md:py-4 focus:ring-2 focus:ring-gray-700/100 outline-none transition-all resize-none placeholder:text-black/50 text-black text-sm md:text-base"
               placeholder="Tell me about your project..."
             ></textarea>
           </div>
@@ -96,7 +96,7 @@ export default function ContactPage() {
           <button
             type="submit"
             disabled={status === "sending"}
-            className="w-full bg-white text-black font-bold uppercase tracking-[0.2em] text-xs py-4 md:py-5 rounded-xl hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-black text-white font-bold uppercase tracking-[0.2em] text-xs py-4 md:py-5 rounded-xl hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === "sending" ? "Sending..." : "Send Message"}
           </button>
