@@ -1,4 +1,4 @@
-// Project data for the portfolio
+// src/data/projects.js
 
 export const categories = [
   "Hard Surface",
@@ -12,131 +12,172 @@ export const projects = [
     slug: "up-house",
     title: "Environment UP HOUSE",
     category: "Environment",
-    technologies: ["Maya", "Arnold", "Nuke"],
+
     cover: "/enviroments/CasaUp/RenderUp10MB.webp",
 
-    finalRenders: [
-      "/enviroments/CasaUp/RenderUp10MB.webp",
-    ],
+    finalRenders: ["/enviroments/CasaUp/RenderUp10MB.webp"],
 
     wireframe: "/enviroments/CasaUp/RenderUpWireframe10MB.webp",
     clayRender: "/enviroments/CasaUp/RenderUpArcilla10MB.webp",
 
-    description:
-      "Render of the house from the movie UP.",
-
+    description: "Render of the house from the movie UP.",
   },
 
   {
     slug: "room-1",
-    title: "3D Room Design",
+    title: "3D Room design",
     category: "Diorama",
-    technologies: ["Blender", "Substance Painter"],
+
     cover: "/diorama/Habitacion01/HabitacionRender.webp",
 
-    finalRenders: [
-      "/diorama/Habitacion01/RenderTexturaHabitacion.mp4",
-
-    ],
+    finalRenders: ["/diorama/Habitacion01/RenderTexturaHabitacion.mp4"],
     clayVideo: "/diorama/Habitacion01/AnimClayHabitacion.mp4",
     clayRender: "/diorama/Habitacion01/RenderClayHabitacion.webp",
 
-    description:
-      "3D design of a modern room for teenagers.",
-
-
+    description: "3D design of a modern room for teenagers.",
   },
   {
     slug: "room-2",
-    title: "3D Room Design 2",
+    title: "3D Room design 2",
     category: "Diorama",
-    technologies: ["Blender", "Substance Painter"],
+
     cover: "/diorama/Habitacion02/RenderTexturaHabitacion02.webp",
 
-    finalRenders: [
-      "/diorama/Habitacion02/RenderTexturaHabitacion02.mp4",
-
-    ],
+    finalRenders: ["/diorama/Habitacion02/RenderTexturaHabitacion02.mp4"],
     clayVideo: "/diorama/Habitacion02/RenderClayHabitacion02.mp4",
     clayRender: "/diorama/Habitacion02/RenderClayHabitacion02.webp",
 
-    description:
-      "3D design of a modern room for teenagers.",
-
-
+    description: "3D design of a modern room for teenagers.",
   },
   {
     slug: "temple",
     title: "Ancient Temple",
     category: "Environment",
-    technologies: ["Unreal Engine 5", "ZBrush", "Megascans"],
+
     cover: "/enviroments/templo/RenderTemplo4K.webp",
 
     finalRenders: [
       "/enviroments/templo/RenderTemploBanner.webp",
       "/enviroments/templo/RenderTemploAbandonado.mp4",
-
     ],
 
-    description:
-      "Ancient abandoned temple with old architecture.",
+    description: "Ancient abandonated temple with old arquitecture.",
   },
   {
     slug: "animations",
     title: "Body Movements Animations",
     category: "Animations",
-    technologies: ["Maya", "Motion Builder"],
+
     cover: "/animation/animationCover.webp",
 
-    finalRenders: [
-      "/animation/animation1.mov",
-      "/animation/animation2.mov",
-
-    ],
-
+    finalRenders: ["/animation/animation1.mov", "/animation/animation2.mov"],
 
     description:
-      "Body animated movements such as standing up or playing with knives.",
-
-
+      "Body animated movements as standing up or playing with knifes.",
   },
   {
     slug: "room-3",
-    title: "3D Room Design 3",
+    title: "3D Room design 3",
     category: "Diorama",
-    technologies: ["Blender", "Substance Painter", "Photoshop"],
+
     cover: "/diorama/Habitacion03/RenderHabitacion03.png",
 
-    finalRenders: [
-      "/diorama/Habitacion03/RenderHabitacion03.png",
-
-    ],
+    finalRenders: ["/diorama/Habitacion03/RenderHabitacion03.png"],
     clayRender: "/diorama/Habitacion03/RenderClayHabitacion03.png",
 
-
-    description:
-      "3D design of a modern dream room.",
-
-
+    description: "3D design of a modern dream room.",
   },
   {
     slug: "street-model",
-    title: "3D Street Environment",
+    title: "3D street enviroment",
     category: "Environment",
-    technologies: ["Maya", "Substance Designer", "Arnold"],
+
     cover: "/enviroments/Street/TrainCover.png",
 
     finalRenders: [
       "/enviroments/Street/ProcesoCalle.mp4",
       "/enviroments/Street/RenderCalleTextura.mp4",
-
     ],
     clayVideo: "/enviroments/Street/RenderCalleClay.mp4",
 
-
-    description:
-      "3D design of a street environment.",
-
-
+    description: "3D design of a street enviroment.",
   },
+  {
+    slug: "paper-plane",
+    title: "Paper plane fliying",
+    category: "Animation",
+
+    cover: "/animation/AvionPapel/principal.png",
+
+    finalRenders: [
+      "/animation/AvionPapel/RenderAguaPapel01.mp4",
+      "/animation/AvionPapel/RenderAguaPapel02.mp4",
+      "/animation/AvionPapel/RenderAguaPapelFinal.mp4",
+    ],
+
+    description: "Tracking a paper plane fliying around",
+  },
+  {
+    slug: "tele-environment",
+
+    title: "Tele Environment",
+
+    category: "Environment",
+
+    cover: "/enviroments/Tele/RenderTeleAcuario4K.png",
+
+    finalRenders: ["/enviroments/Tele/RenderTeleAcuario.mp4"],
+
+    description: "3D model of a tele environment.",
+  },
+  {
+    slug: "bmo-character",
+    title: "BMO Character",
+    category: "Characters",
+    cover: "/characters/BMO/AnimacionBMO.png",
+
+    finalRenders: ["/characters/BMO/AnimacionBMO.mp4"],
+    description: "3D model of BMO character from Adventure Time.",
+  },
+  {
+    slug: "pc-character",
+    title: "PC Character",
+    category: "Characters",
+    cover: "/characters/PC/AnimacionPC.png",
+
+    finalRenders: ["/characters/PC/AnimacionPC.mp4"],
+
+    description: "3D model of PC character from Adventure Time.",
+  },
+
+  {
+    slug: "wall-e-character",
+
+    title: "Wall-E Character",
+
+    category: "Characters",
+
+    cover: "/characters/Wall-E/RenderWallE.png",
+
+    finalRenders: ["/characters/Wall-E/RenderWallE.png"],
+    clayRender: "/characters/Wall-E/RenderWallEArcilla.png",
+
+    description: "3D model of Wall-E character from Adventure Time.",
+  },
+
+  {
+    slug: "metro-environment",
+
+    title: "Metro Environment",
+
+    category: "Environment",
+
+    cover: "/enviroments/Metro/RenderMetro.png",
+
+    finalRenders: ["/enviroments/Metro/RenderMetro.mp4"],
+
+    description: "3D model of a metro environment.",
+  },
+
+  
 ];
